@@ -3,7 +3,7 @@
 int main(int argc, char *argv[])
 {
 
-	if(argc != 1)
+	if(argv[0] == "")
 	{
 		std::cout << "\033[41" << "No bot token specified. Can't launch bot. Aborting...";
 		return 0;
