@@ -11,6 +11,7 @@ add_subdirectory("libs/DPP")
 add_executable (${PROJECT_NAME} 
 	"src/BUDe.cpp"
 	"src/BUDe.h"
+	"src/EmbedBuilder.h"
 )
 
 target_link_libraries(${PROJECT_NAME}

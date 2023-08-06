@@ -9,9 +9,9 @@ int main(int argc, char *argv[])
 		return 0;
 	}
 
-	token = argv[0];
+	BUDe::token = argv[0];
 	
-	dpp::cluster bot(token);
+	dpp::cluster bot(BUDe::token);
 
 	bot.on_log(dpp::utility::cout_logger());
 

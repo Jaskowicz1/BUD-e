@@ -1,7 +1,8 @@
 .vs/
 .idea/
 out/
-lib/
+libs/
+build/
 
 # Prerequisites
 *.d
