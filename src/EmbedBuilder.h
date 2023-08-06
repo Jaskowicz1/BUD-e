@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include <dpp/colors.h>
-
+#include <list>
 #include "dpp/message.h"
 
 class EmbedBuilder
