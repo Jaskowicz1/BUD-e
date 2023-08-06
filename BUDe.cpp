@@ -3,10 +3,8 @@
 
 #include "BUDe.h"
 
-using namespace std;
-
 int main()
 {
-	cout << "Hello world! If you're seeing this, we should have D++ now!" << endl;
+	std::cout << "Hello world!! If you're seeing this, we should have D++ now!" << std::endl;
 	return 0;
 }
