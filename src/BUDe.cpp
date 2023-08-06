@@ -3,13 +3,14 @@
 int main(int argc, char *argv[])
 {
 
-	if(argv[0] == "")
+ // "./BUDe" counts as an argument
+	if(argc != 2)
 	{
-		std::cout << "\033[41" << "No bot token specified. Can't launch bot. Aborting...";
+		std::cout << "No bot token specified. Can't launch bot. Aborting...";
 		return 0;
 	}
 
-	BUDe::token = argv[0];
+	BUDe::token = argv[1];
 	
 	dpp::cluster bot(BUDe::token);
 
