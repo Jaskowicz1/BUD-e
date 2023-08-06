@@ -7,6 +7,6 @@ using namespace std;
 
 int main()
 {
-	cout << "Hello CMake." << endl;
+	cout << "Hello world! If you're seeing this, we should have D++ now!" << endl;
 	return 0;
 }
