@@ -1,10 +1,15 @@
+# Any IDEs
 .vs/
 .idea/
+.vscode/
+
+# CMake stuff, people should generate these themselves if they want to.
 out/
 libs/
 build/
 cmake-build-debug/
 vcpkg.json
+CMakeSettings.json
 
 # Prerequisites
 *.d
@@ -38,4 +43,3 @@ vcpkg.json
 *.exe
 *.out
 *.app
-CMakeSettings.json

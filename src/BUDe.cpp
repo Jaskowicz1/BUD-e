@@ -82,6 +82,19 @@ int main(int argc, char *argv[])
 
             BUDe::botRef->log(dpp::ll_info, "Bot is registering commands.");
 
+            // All global commands.
+
+            dpp::slashcommand ping("ping", "Ping pong!", BUDe::botRef->me.id);
+            dpp::slashcommand pong("pong", "Pong ping!", BUDe::botRef->me.id);
+            dpp::slashcommand credits("credits", "Credits of BUD-e.", BUDe::botRef->me.id);
+
+            // Bulk create because otherwise we'll get nuked by rate limits.
+            BUDe::botRef->global_bulk_command_create({ping, pong, credits});
+
+            // ---------------------------------------------------------------------------------------
+            // All guild commands just for BUD-e's Tower.
+
+            dpp::slashcommand embedtest("embedtest", "Testing!", BUDe::botRef->me.id);
             dpp::slashcommand lol("lol", "Testing embeds with arguments", BUDe::botRef->me.id);
             dpp::slashcommand announcement("Announcement", "Create an announcement for BUD-e's tower.", BUDe::botRef->me.id);
 
@@ -94,18 +107,17 @@ int main(int argc, char *argv[])
                 .add_option(dpp::command_option(dpp::co_string, "title", "The title of the announcement", true))
                 .add_option(dpp::command_option(dpp::co_string, "text", "The announcement text", true));
 
-            BUDe::botRef->global_command_create(dpp::slashcommand("ping", "Ping pong!", BUDe::botRef->me.id));
-            BUDe::botRef->global_command_create(dpp::slashcommand("pong", "Pong ping!", BUDe::botRef->me.id));
-            BUDe::botRef->global_command_create(dpp::slashcommand("credits", "Credits of BUD-e.", BUDe::botRef->me.id));
-            BUDe::botRef->guild_command_create(dpp::slashcommand("embedtest", "Testing!", BUDe::botRef->me.id), 695826306180448312);
-            BUDe::botRef->guild_command_create(lol, 695826306180448312);
-            BUDe::botRef->guild_command_create(announcement, 667401873233543173);
+            BUDe::botRef->guild_bulk_command_create({embedtest, lol, announcement}, 695826306180448312);
         }
 
-        BUDe::botRef->set_presence(dpp::presence(dpp::presence_status::ps_online, dpp::activity_type::at_custom, "Booting..."));
+        // Message here doesn't matter, won't get sent anyways.
+        BUDe::botRef->set_presence(dpp::presence(dpp::presence_status::ps_online, dpp::activity_type::at_custom, ""));
 
+        // Create a thread to handle all the status changing.
         std::thread presenceThread(BUDe::ChangeStatus);
 
+        // Turn into daemon process so it's not reliant on main thread.
+        // We never have to communicate with this thread so it's okay.
         presenceThread.detach();
 
         BUDe::botRef->message_create(dpp::message(667405048267014164,
@@ -144,10 +156,23 @@ void BUDe::ChangeStatus() {
         std::uniform_int_distribution<> distrib(0, statuses.size() - 1);
 
         std::string newStatus (statuses[distrib(gen)]);
+
+        dpp::activity_type type = dpp::activity_type::at_game;
+
+        if(newStatus.find("$listening") != std::string::npos) {
+            newStatus = std::regex_replace(newStatus, std::regex("\\$listening "), "");
+            type = dpp::activity_type::at_listening;
+        } else if(newStatus.find("$playing") != std::string::npos) {
+            newStatus = std::regex_replace(newStatus, std::regex("\\$playing "), "");
+            type = dpp::activity_type::at_game;
+        } else if(newStatus.find("$watching") != std::string::npos) {
+            newStatus = std::regex_replace(newStatus, std::regex("\\$watching "), "");
+            type = dpp::activity_type::at_watching;
+        }
         
         newStatus = std::regex_replace(newStatus, std::regex("\\$servers"), "" + BUDe::botRef->current_user_get_guilds_sync().size());
 
         // Get a random status message and set the bot's presence to it.
-        BUDe::botRef->set_presence(dpp::presence(dpp::presence_status::ps_online, dpp::activity_type::at_game, newStatus));
+        BUDe::botRef->set_presence(dpp::presence(dpp::presence_status::ps_online, type, newStatus));
     }
 }

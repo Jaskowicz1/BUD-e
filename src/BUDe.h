@@ -24,7 +24,9 @@ namespace BUDe
 
 	dpp::cluster* botRef;
 
-	const std::vector<std::string> statuses = { "with wires", "with tools", "Golf on the moon", "with $servers guilds."};
+	const std::vector<std::string> statuses = { "$playing with wires.", "$playing Golf on the moon!", 
+	"$listening to electro-beeps!", "$listening to circuit symphonies!", 
+	"$watching binary sunsets!", "$watching algorithms in action!"};
 
 #pragma endregion
 };
