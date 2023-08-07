@@ -3,6 +3,8 @@
 #include "EmbedBuilder.h"
 
 #include <iostream>
+#include <thread>
+#include <chrono>
 #include <dpp/dpp.h>
 
 namespace BUDe
