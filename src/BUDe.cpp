@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
 
         BUDe::botRef->set_presence(dpp::presence(dpp::presence_status::ps_online, dpp::activity_type::at_custom, "Booting..."));
 
-        std::thread presenceThread(ChangeStatus);
+        std::thread presenceThread(BUDe::ChangeStatus);
 
         BUDe::botRef->message_create(dpp::message(667405048267014164,
             EmbedBuilder::BasicEmbedWithTimestamp(dpp::colours::green,
@@ -128,7 +128,7 @@ void BUDe::callback_handler(int signum)
     exit(signum);
 }
 
-void ChangeStatus() {
+void BUDe::ChangeStatus() {
     while (true) {
         std::this_thread::sleep_for(std::chrono::seconds(30));
         std::cout << "Changing presence." << std::endl;
