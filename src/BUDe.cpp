@@ -82,6 +82,7 @@ int main(int argc, char *argv[])
 
             BUDe::botRef->log(dpp::ll_info, "Bot is registering commands.");
 
+            // ---------------------------------------------------------------------------------------
             // All global commands.
 
             dpp::slashcommand ping("ping", "Ping pong!", BUDe::botRef->me.id);
@@ -107,7 +108,9 @@ int main(int argc, char *argv[])
                 .add_option(dpp::command_option(dpp::co_string, "title", "The title of the announcement", true))
                 .add_option(dpp::command_option(dpp::co_string, "text", "The announcement text", true));
 
-            BUDe::botRef->guild_bulk_command_create({embedtest, lol, announcement}, 695826306180448312);
+            BUDe::botRef->guild_bulk_command_create({embedtest, announcement, lol}, 695826306180448312);
+
+            BUDe::botRef->log(dpp::ll_info, "Bot has completed registering commands.");
         }
 
         // Message for status here doesn't matter, won't get sent anyways.
