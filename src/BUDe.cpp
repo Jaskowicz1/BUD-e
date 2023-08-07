@@ -36,20 +36,17 @@ int main(int argc, char *argv[])
             event.reply(dpp::message(event.command.channel_id, "test")
             .add_component(
                 dpp::component().set_label("Rock").
-                set_type(dpp::cot_button).
                 set_emoji(u8"🪨").
                 set_style(dpp::cos_secondary).
                 set_id("rock")
             )
             .add_component(
                 dpp::component().set_label("Paper").
-                set_type(dpp::cot_button).
                 set_emoji(u8"📰").
                 set_style(dpp::cos_secondary).
                 set_id("paper")
             ).add_component(
                 dpp::component().set_label("Scissors").
-                set_type(dpp::cot_button).
                 set_emoji(u8"✂️").
                 set_style(dpp::cos_secondary).
                 set_id("scissors")
