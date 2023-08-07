@@ -108,7 +108,7 @@ int main(int argc, char *argv[])
                 .add_option(dpp::command_option(dpp::co_string, "title", "The title of the announcement", true))
                 .add_option(dpp::command_option(dpp::co_string, "text", "The announcement text", true));
 
-            BUDe::botRef->guild_bulk_command_create({embedtest, embedtesttwo}, 695826306180448312);
+            BUDe::botRef->guild_bulk_command_create({embedtest, embedtesttwo, announcement}, 667401873233543173);
 
             BUDe::botRef->log(dpp::ll_info, "Bot has completed registering commands.");
         }
