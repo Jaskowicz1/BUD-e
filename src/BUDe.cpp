@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
 
             dpp::slashcommand embedtest("embedtest", "Testing!", BUDe::botRef->me.id);
             dpp::slashcommand lol("embedtesttwo", "Testing embeds with arguments", BUDe::botRef->me.id);
-            dpp::slashcommand announcement("Announcement", "Create an announcement for BUD-e's tower.", BUDe::botRef->me.id);
+            dpp::slashcommand announcement("announcement", "Create an announcement for BUD-e's tower.", BUDe::botRef->me.id);
 
             lol
                 .add_option(dpp::command_option(dpp::co_string, "colour", "The colour of the embed", true))
