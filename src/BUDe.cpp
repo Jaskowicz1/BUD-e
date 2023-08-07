@@ -133,6 +133,7 @@ void BUDe::callback_handler(int signum)
 }
 
 void BUDe::ChangeStatus() {
+
     while (true) {
         // Once every minute (Discord Rate-Limit moment).
         std::this_thread::sleep_for(std::chrono::minutes(1));
@@ -144,7 +145,7 @@ void BUDe::ChangeStatus() {
 
         std::string newStatus (statuses[distrib(gen)]);
         
-        newStatus = std::regex_replace(newStatus, std::regex("{servers}"), "" + BUDe::botRef->current_user_get_guilds_sync().size());
+        newStatus = std::regex_replace(newStatus, std::regex("\\$servers"), "" + BUDe::botRef->current_user_get_guilds_sync().size());
 
         // Get a random status message and set the bot's presence to it.
         BUDe::botRef->set_presence(dpp::presence(dpp::presence_status::ps_online, dpp::activity_type::at_game, newStatus));
