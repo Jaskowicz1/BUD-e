@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
             // All guild commands just for BUD-e's Tower.
 
             dpp::slashcommand embedtest("embedtest", "Testing!", BUDe::botRef->me.id);
-            dpp::slashcommand lol("lol", "Testing embeds with arguments", BUDe::botRef->me.id);
+            dpp::slashcommand lol("embedtesttwo", "Testing embeds with arguments", BUDe::botRef->me.id);
             dpp::slashcommand announcement("Announcement", "Create an announcement for BUD-e's tower.", BUDe::botRef->me.id);
 
             lol
@@ -110,7 +110,7 @@ int main(int argc, char *argv[])
             BUDe::botRef->guild_bulk_command_create({embedtest, lol, announcement}, 695826306180448312);
         }
 
-        // Message here doesn't matter, won't get sent anyways.
+        // Message for status here doesn't matter, won't get sent anyways.
         BUDe::botRef->set_presence(dpp::presence(dpp::presence_status::ps_online, dpp::activity_type::at_custom, ""));
 
         // Create a thread to handle all the status changing.
@@ -147,8 +147,8 @@ void BUDe::callback_handler(int signum)
 void BUDe::ChangeStatus() {
 
     while (true) {
-        // Once every minute (Discord Rate-Limit moment).
-        std::this_thread::sleep_for(std::chrono::minutes(1));
+        // Once every five minutes, don't want it changing too fast (Rate-Limit reasons and because it'd be silly).
+        std::this_thread::sleep_for(std::chrono::minutes(5));
 
         // Generate a random value in the statuses array.
         std::random_device rd;

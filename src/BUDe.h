@@ -22,10 +22,12 @@ namespace BUDe
 
 	std::string token = "";
 
+	// The bot reference.
 	dpp::cluster* botRef;
 
+	// All of BUD-e's statuses!
 	const std::vector<std::string> statuses = { "$playing with wires.", "$playing Golf on the moon!", 
-	"$listening to electro-beeps!", "$listening to circuit symphonies!", 
+	"$listening electro-beeps!", "$listening circuit symphonies!", 
 	"$watching binary sunsets!", "$watching algorithms in action!"};
 
 #pragma endregion
