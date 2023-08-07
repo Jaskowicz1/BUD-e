@@ -34,22 +34,27 @@ int main(int argc, char *argv[])
         }
         else if (event.command.get_command_name() == "rps" || event.command.get_command_name() == "rockpaperscissors") {
             event.reply(dpp::message(event.command.channel_id, "test")
-            .add_component(
-                dpp::component().set_label("Rock").
-                set_emoji(u8"🪨").
-                set_style(dpp::cos_secondary).
-                set_id("rock")
-            )
-            .add_component(
-                dpp::component().set_label("Paper").
-                set_emoji(u8"📰").
-                set_style(dpp::cos_secondary).
-                set_id("paper")
-            ).add_component(
-                dpp::component().set_label("Scissors").
-                set_emoji(u8"✂️").
-                set_style(dpp::cos_secondary).
-                set_id("scissors")
+            .add_component (
+                dpp::component().add_component(
+                    dpp::component().set_label("Rock").
+                    set_type(dpp::cot_button).
+                    set_emoji(u8"🪨").
+                    set_style(dpp::cos_primary).
+                    set_id("rock")
+                )
+                .add_component(
+                    dpp::component().set_label("Paper").
+                    set_type(dpp::cot_button).
+                    set_emoji(u8"📰").
+                    set_style(dpp::cos_primary).
+                    set_id("paper")
+                ).add_component(
+                    dpp::component().set_label("Scissors").
+                    set_type(dpp::cot_button).
+                    set_emoji(u8"✂️").
+                    set_style(dpp::cos_primary).
+                    set_id("scissors")
+                )
             ));
         }
         else if (event.command.get_command_name() == "announcement")
