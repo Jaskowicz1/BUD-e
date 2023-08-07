@@ -1,4 +1,6 @@
 ﻿#include "BUDe.h"
+#include <random>
+#include <regex>
 
 int main(int argc, char *argv[])
 {
@@ -132,8 +134,19 @@ void BUDe::callback_handler(int signum)
 
 void BUDe::ChangeStatus() {
     while (true) {
-        std::this_thread::sleep_for(std::chrono::seconds(30));
-        std::cout << "Changing presence." << std::endl;
-        BUDe::botRef->set_presence(dpp::presence(dpp::presence_status::ps_online, dpp::activity_type::at_game, "Testing..."));
+        // Once every minute (Discord Rate-Limit moment).
+        std::this_thread::sleep_for(std::chrono::minutes(1));
+
+        // Generate a random value in the statuses array.
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> distrib(0, statuses.size() - 1);
+
+        std::string newStatus (statuses[distrib(gen)]);
+        
+        newStatus = std::regex_replace(newStatus, std::regex("{servers}"), "" + BUDe::botRef->current_user_get_guilds_sync().size());
+
+        // Get a random status message and set the bot's presence to it.
+        BUDe::botRef->set_presence(dpp::presence(dpp::presence_status::ps_online, dpp::activity_type::at_game, newStatus));
     }
 }

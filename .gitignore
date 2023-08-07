@@ -38,3 +38,4 @@ vcpkg.json
 *.exe
 *.out
 *.app
+CMakeSettings.json

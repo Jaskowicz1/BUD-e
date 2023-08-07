@@ -9,11 +9,22 @@
 
 namespace BUDe
 {
-	std::string token = "";
 
-	dpp::cluster* botRef;
+#pragma region Functions
 
 	void callback_handler(int signum);
 
 	void ChangeStatus();
+
+#pragma endregion
+
+#pragma region Variables
+
+	std::string token = "";
+
+	dpp::cluster* botRef;
+
+	const std::vector<std::string> statuses = { "with wires", "with tools", "Golf on the moon", "with {servers} servers."};
+
+#pragma endregion
 };
