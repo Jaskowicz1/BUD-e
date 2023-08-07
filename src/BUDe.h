@@ -12,4 +12,6 @@ namespace BUDe
 	dpp::cluster* botRef;
 
 	void callback_handler(int signum);
+
+	void ChangeStatus();
 };
