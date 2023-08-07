@@ -8,4 +8,8 @@
 namespace BUDe
 {
 	std::string token = "";
+
+	dpp::cluster* botRef;
+
+	void callback_handler(int signum);
 };

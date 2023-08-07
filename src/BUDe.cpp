@@ -6,7 +6,7 @@ int main(int argc, char *argv[])
     // "./BUDe" counts as an argument so 2 here means "./BUDe <token>"
 	if(argc != 2)
 	{
-		std::cout << "No bot token specified. Can't launch bot. Aborting...";
+		std::cout << "No bot token specified. Can't launch bot Aborting...";
 		return 0;
 	}
 
@@ -14,9 +14,11 @@ int main(int argc, char *argv[])
 	
 	dpp::cluster bot(BUDe::token);
 
-	bot.on_log(dpp::utility::cout_logger());
+    BUDe::botRef = &bot;
 
-    bot.on_slashcommand([&bot](const dpp::slashcommand_t& event) {
+    BUDe::botRef->on_log(dpp::utility::cout_logger());
+
+    BUDe::botRef->on_slashcommand([&](const dpp::slashcommand_t& event) {
         if (event.command.get_command_name() == "ping") {
             event.reply("Pong!");
         }
@@ -36,7 +38,7 @@ int main(int argc, char *argv[])
         }
         else if (event.command.get_command_name() == "announcement")
         {
-            bot.message_create(dpp::message(667402621333798923, EmbedBuilder::BasicEmbed(dpp::colours::aqua,
+            BUDe::botRef->message_create(dpp::message(667402621333798923, EmbedBuilder::BasicEmbed(dpp::colours::aqua,
                 std::get<std::string>(event.get_parameter("title")),
                 std::get<std::string>(event.get_parameter("text")))));
 
@@ -66,20 +68,20 @@ int main(int argc, char *argv[])
 
     });
 
-    bot.log(dpp::ll_info, "AHHHHHHHHHH.");
+    BUDe::botRef->log(dpp::ll_info, "AHHHHHHHHHH.");
 
     /* Register slash command here in on_ready */
-    bot.on_ready([&bot](const dpp::ready_t& event) {
+    BUDe::botRef->on_ready([&](const dpp::ready_t& event) {
 
-        bot.log(dpp::ll_info, "Bot is now ready.");
+        BUDe::botRef->log(dpp::ll_info, "Bot is now ready.");
 
         /* Wrap command registration in run_once to make sure it doesnt run on every full reconnection */
         if (dpp::run_once<struct register_bot_commands>()) {
 
-            bot.log(dpp::ll_info, "Bot is registering commands.");
+            BUDe::botRef->log(dpp::ll_info, "Bot is registering commands.");
 
-            dpp::slashcommand lol("lol", "Testing embeds with arguments", bot.me.id);
-            dpp::slashcommand announcement("Announcement", "Create an announcement for BUD-e's tower.", bot.me.id);
+            dpp::slashcommand lol("lol", "Testing embeds with arguments", BUDe::botRef->me.id);
+            dpp::slashcommand announcement("Announcement", "Create an announcement for BUD-e's tower.", BUDe::botRef->me.id);
 
             lol
                 .add_option(dpp::command_option(dpp::co_string, "colour", "The colour of the embed", true))
@@ -90,28 +92,36 @@ int main(int argc, char *argv[])
                 .add_option(dpp::command_option(dpp::co_string, "title", "The title of the announcement", true))
                 .add_option(dpp::command_option(dpp::co_string, "text", "The announcement text", true));
 
-            bot.global_command_create(dpp::slashcommand("ping", "Ping pong!", bot.me.id));
-            bot.global_command_create(dpp::slashcommand("pong", "Pong ping!", bot.me.id));
-            bot.global_command_create(dpp::slashcommand("credits", "Credits of BUD-e.", bot.me.id));
-            bot.guild_command_create(dpp::slashcommand("embedtest", "Testing!", bot.me.id), 695826306180448312);
-            bot.guild_command_create(lol, 695826306180448312);
-            bot.guild_command_create(announcement, 667401873233543173);
+            BUDe::botRef->global_command_create(dpp::slashcommand("ping", "Ping pong!", BUDe::botRef->me.id));
+            BUDe::botRef->global_command_create(dpp::slashcommand("pong", "Pong ping!", BUDe::botRef->me.id));
+            BUDe::botRef->global_command_create(dpp::slashcommand("credits", "Credits of BUD-e.", BUDe::botRef->me.id));
+            BUDe::botRef->guild_command_create(dpp::slashcommand("embedtest", "Testing!", BUDe::botRef->me.id), 695826306180448312);
+            BUDe::botRef->guild_command_create(lol, 695826306180448312);
+            BUDe::botRef->guild_command_create(announcement, 667401873233543173);
         }
 
-        bot.set_presence(dpp::presence(dpp::presence_status::ps_dnd, dpp::activity_type::at_custom, "Booting..."));
+        BUDe::botRef->set_presence(dpp::presence(dpp::presence_status::ps_dnd, dpp::activity_type::at_custom, "Booting..."));
 
-        bot.message_create(dpp::message(667405048267014164,
+        BUDe::botRef->message_create(dpp::message(667405048267014164,
             EmbedBuilder::BasicEmbedWithTimestamp(dpp::colours::green,
                 "All systems are online, Captain!",
                 "All systems have booted online and are ready to go!")));
     });
 
-    bot.on_presence_update([&bot](const dpp::presence_update_t& event) {
+    BUDe::botRef->on_presence_update([&](const dpp::presence_update_t& event) {
         std::cout << "Presence updated. New presence is: " << event.rich_presence.status();
         });
 
+    signal(SIGINT, BUDe::callback_handler);
+
     /* Start the bot */
-    bot.start(dpp::st_wait);
+    BUDe::botRef->start(dpp::st_wait);
 
     return 0;
+}
+
+void BUDe::callback_handler(int signum)
+{
+    BUDe::botRef->shutdown();
+    exit(signum);
 }
