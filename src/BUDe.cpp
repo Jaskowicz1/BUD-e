@@ -4,13 +4,18 @@
 
 int main(int argc, char *argv[])
 {
-
     // "./BUDe" counts as an argument so 2 here means "./BUDe <token>"
 	if(argc != 2)
 	{
 		std::cout << "No bot token specified. Can't launch bot Aborting...";
 		return 0;
 	}
+
+    /*
+    event.reply(dpp::message(event.command.channel_id, EmbedBuilder::BasicEmbed(dpp::colours::aqua,
+                std::get<std::string>(event.get_parameter("title")),
+                std::get<std::string>(event.get_parameter("description")))));
+    */
 
 	BUDe::token = argv[1];
 	
@@ -27,16 +32,28 @@ int main(int argc, char *argv[])
         else if (event.command.get_command_name() == "pong") {
             event.reply("Ping!");
         }
-        else if (event.command.get_command_name() == "embedtest")
-        {
-            event.reply(dpp::message(event.command.channel_id, EmbedBuilder::BasicEmbed(dpp::colours::aqua,
-                "This is a test embed.", "If you're seeing this, embeds fully work and are customizable.")));
-        }
-        else if (event.command.get_command_name() == "lol")
-        {
-            event.reply(dpp::message(event.command.channel_id, EmbedBuilder::BasicEmbed(dpp::colours::aqua,
-                std::get<std::string>(event.get_parameter("title")),
-                std::get<std::string>(event.get_parameter("description")))));
+        else if (event.command.get_command_name() == "rps" || event.command.get_command_name() == "rockpaperscissors") {
+            event.reply(dpp::message(event.command.channel_id, "test")
+            .add_component(
+                dpp::component().set_label("Rock").
+                set_type(dpp::cot_button).
+                set_emoji(u8"🪨").
+                set_style(dpp::cos_secondary).
+                set_id("rock")
+            )
+            .add_component(
+                dpp::component().set_label("Paper").
+                set_type(dpp::cot_button).
+                set_emoji(u8"📰").
+                set_style(dpp::cos_secondary).
+                set_id("paper")
+            ).add_component(
+                dpp::component().set_label("Scissors").
+                set_type(dpp::cot_button).
+                set_emoji(u8"✂️").
+                set_style(dpp::cos_secondary).
+                set_id("scissors")
+            ));
         }
         else if (event.command.get_command_name() == "announcement")
         {
@@ -59,7 +76,6 @@ int main(int argc, char *argv[])
                 std::string("\n") +
                 std::string("APIs used:\n") +
                 std::string("- D++\n") +
-                std::string("- mysqlconnector\n") +
                 std::string("\n") +
                 std::string("Again, Thank you for all the support. I love you all and I'm so happy to see you using BUD-e once again.");
 
@@ -69,8 +85,6 @@ int main(int argc, char *argv[])
         }
 
     });
-
-    BUDe::botRef->log(dpp::ll_info, "AHHHHHHHHHH.");
 
     /* Register slash command here in on_ready */
     BUDe::botRef->on_ready([&](const dpp::ready_t& event) {
@@ -95,20 +109,21 @@ int main(int argc, char *argv[])
             // ---------------------------------------------------------------------------------------
             // All guild commands just for BUD-e's Tower.
 
-            dpp::slashcommand embedtest("embedtest", "Testing!", BUDe::botRef->me.id);
-            dpp::slashcommand embedtesttwo("embedtesttwo", "Testing embeds with arguments", BUDe::botRef->me.id);
+            dpp::slashcommand rps("rps", "Play Rock, Paper, Scissors!", BUDe::botRef->me.id);
             dpp::slashcommand announcement("announcement", "Create an announcement for BUD-e's tower.", BUDe::botRef->me.id);
 
+            /*
             embedtesttwo
                 .add_option(dpp::command_option(dpp::co_string, "colour", "The colour of the embed", true))
                 .add_option(dpp::command_option(dpp::co_string, "title", "The title of the embed", true))
                 .add_option(dpp::command_option(dpp::co_string, "description", "The description of the embed", true));
+                */
 
             announcement
                 .add_option(dpp::command_option(dpp::co_string, "title", "The title of the announcement", true))
                 .add_option(dpp::command_option(dpp::co_string, "text", "The announcement text", true));
 
-            BUDe::botRef->guild_bulk_command_create({embedtest, embedtesttwo, announcement}, 667401873233543173);
+            BUDe::botRef->guild_bulk_command_create({rps, announcement}, 667401873233543173);
 
             BUDe::botRef->log(dpp::ll_info, "Bot has completed registering commands.");
         }
