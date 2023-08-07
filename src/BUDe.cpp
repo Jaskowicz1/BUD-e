@@ -96,10 +96,10 @@ int main(int argc, char *argv[])
             // All guild commands just for BUD-e's Tower.
 
             dpp::slashcommand embedtest("embedtest", "Testing!", BUDe::botRef->me.id);
-            dpp::slashcommand lol("embedtesttwo", "Testing embeds with arguments", BUDe::botRef->me.id);
+            dpp::slashcommand embedtesttwo("embedtesttwo", "Testing embeds with arguments", BUDe::botRef->me.id);
             dpp::slashcommand announcement("announcement", "Create an announcement for BUD-e's tower.", BUDe::botRef->me.id);
 
-            lol
+            embedtesttwo
                 .add_option(dpp::command_option(dpp::co_string, "colour", "The colour of the embed", true))
                 .add_option(dpp::command_option(dpp::co_string, "title", "The title of the embed", true))
                 .add_option(dpp::command_option(dpp::co_string, "description", "The description of the embed", true));
@@ -108,7 +108,7 @@ int main(int argc, char *argv[])
                 .add_option(dpp::command_option(dpp::co_string, "title", "The title of the announcement", true))
                 .add_option(dpp::command_option(dpp::co_string, "text", "The announcement text", true));
 
-            BUDe::botRef->guild_bulk_command_create({embedtest, announcement, lol}, 695826306180448312);
+            BUDe::botRef->guild_bulk_command_create({embedtest, embedtesttwo}, 695826306180448312);
 
             BUDe::botRef->log(dpp::ll_info, "Bot has completed registering commands.");
         }
