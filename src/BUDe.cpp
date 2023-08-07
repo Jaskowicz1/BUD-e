@@ -104,6 +104,8 @@ int main(int argc, char *argv[])
 
         std::thread presenceThread(BUDe::ChangeStatus);
 
+        presenceThread.detach();
+
         BUDe::botRef->message_create(dpp::message(667405048267014164,
             EmbedBuilder::BasicEmbedWithTimestamp(dpp::colours::green,
                 "All systems are online, Captain!",
