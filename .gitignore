@@ -3,6 +3,8 @@
 out/
 libs/
 build/
+cmake-build-debug/
+vcpkg.json
 
 # Prerequisites
 *.d
