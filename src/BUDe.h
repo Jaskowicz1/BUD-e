@@ -14,7 +14,9 @@ namespace BUDe
 
 	void callback_handler(int signum);
 
-	void ChangeStatus();
+	void ChangeStatusThread();
+
+	void DoStatusChange();
 
 #pragma endregion
 
