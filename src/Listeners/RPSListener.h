@@ -41,6 +41,7 @@ public:
             result = "Draw!";
 
             // what even happened to the damn indentation????????????????
+            /*
             event.edit_response(
                     dpp::message(event.command.channel_id,
                       EmbedBuilder::BasicEmbed(dpp::colours::aqua,result,
@@ -70,6 +71,10 @@ public:
                              )
                      )
             );
+             */
+
+            event.edit_response(dpp::message(event.command.channel_id,EmbedBuilder::BasicEmbed(dpp::colours::aqua,result,
+                          "I picked " + aiChoiceEmoji + "! Pick a choice to play again!")));
             return;
         }
 
@@ -88,35 +93,8 @@ public:
             result = "I won!";
 
         // I don't even want to talk about how ugly this looks. I am going to have nightmares about this.
-        event.edit_response(
-                dpp::message(event.command.channel_id,
-                             EmbedBuilder::BasicEmbed(dpp::colours::aqua,result,
-                                                                "I picked " + aiChoiceEmoji + "! Pick a choice to play again!"))
-                        .add_component(
-                                dpp::component()
-                                        .add_component(
-                                                dpp::component().set_label("Rock").
-                                                        set_type(dpp::cot_button).
-                                                        set_emoji(u8"🪨").
-                                                        set_style(dpp::cos_primary).
-                                                        set_id("rock")
-                                        )
-                                        .add_component(
-                                                dpp::component().set_label("Paper").
-                                                        set_type(dpp::cot_button).
-                                                        set_emoji(u8"📰").
-                                                        set_style(dpp::cos_primary).
-                                                        set_id("paper")
-                                        )
-                                        .add_component(
-                                                dpp::component().set_label("Scissors").
-                                                        set_type(dpp::cot_button).
-                                                        set_emoji(u8"✂️").
-                                                        set_style(dpp::cos_primary).
-                                                        set_id("scissors")
-                                        )
-                        )
-        );
+        event.edit_response(dpp::message(event.command.channel_id,EmbedBuilder::BasicEmbed(dpp::colours::aqua,result,
+                      "I picked " + aiChoiceEmoji + "! Pick a choice to play again!")));
     }
 
 };
