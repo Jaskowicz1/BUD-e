@@ -24,9 +24,19 @@ public:
                 set_timestamp(time(0));
     }
 
+    static inline dpp::embed BasicEmbedWithFooter(const uint32_t textColour, const std::string& title, const std::string& description,
+                                                  const dpp::embed_footer& footer)
+    {
+        return dpp::embed().
+                set_color(textColour).
+                set_title(title).
+                set_description(description).
+                set_footer(footer);
+    }
+
     static inline dpp::embed FullEmbed(const uint32_t textColour, const std::string& title, const std::string& description, const std::string& url,
-        const dpp::embed_author& author, const std::list<dpp::embed_field>& fields, const std::string& thumbnail, const std::string& imageURL, 
-        const dpp::embed_footer& footer, const time_t& timestamp)
+                                       const dpp::embed_author& author, const std::list<dpp::embed_field>& fields, const std::string& thumbnail,
+                                       const std::string& imageURL, const dpp::embed_footer& footer, const time_t& timestamp)
     {
         dpp::embed currentEmbed = dpp::embed().
                 set_color(textColour).
