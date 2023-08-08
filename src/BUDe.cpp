@@ -1,4 +1,8 @@
 ﻿#include "BUDe.h"
+#include "Commands/AnnouncementCommand.h"
+#include "Commands/PongCommand.h"
+#include "Commands/PingCommand.h"
+#include "Commands/CreditsCommand.h"
 #include <random>
 #include <regex>
 
@@ -25,127 +29,75 @@ int main(int argc, char *argv[])
 
     BUDe::botRef->on_log(dpp::utility::cout_logger());
 
+    BUDe::commands.emplace_back(std::make_unique<RPSCommand>());
+    BUDe::commands.emplace_back(std::make_unique<PingCommand>());
+    BUDe::commands.emplace_back(std::make_unique<PongCommand>());
+    BUDe::commands.emplace_back(std::make_unique<AnnouncementCommand>());
+    BUDe::commands.emplace_back(std::make_unique<CreditsCommand>());
+
     BUDe::botRef->on_slashcommand([&](const dpp::slashcommand_t& event) {
-        if (event.command.get_command_name() == "ping") {
-            event.reply("Pong!");
-        }
-        else if (event.command.get_command_name() == "pong") {
-            event.reply("Ping!");
-        }
-        else if (event.command.get_command_name() == "rps" || event.command.get_command_name() == "rockpaperscissors") {
-            event.reply(dpp::message(event.command.channel_id, EmbedBuilder::BasicEmbed(dpp::colours::aqua,
-                "Rock, Paper Scissors!",
-                "Let's play rock, paper, scissors! You pick and I'll pick!"))
-            .add_component (
-                dpp::component().add_component(
-                    dpp::component().set_label("Rock").
-                    set_type(dpp::cot_button).
-                    set_emoji(u8"🪨").
-                    set_style(dpp::cos_primary).
-                    set_id("rock")
-                )
-                .add_component(
-                    dpp::component().set_label("Paper").
-                    set_type(dpp::cot_button).
-                    set_emoji(u8"📰").
-                    set_style(dpp::cos_primary).
-                    set_id("paper")
-                ).add_component(
-                    dpp::component().set_label("Scissors").
-                    set_type(dpp::cot_button).
-                    set_emoji(u8"✂️").
-                    set_style(dpp::cos_primary).
-                    set_id("scissors")
-                )
-            ));
-        }
-        else if (event.command.get_command_name() == "announcement")
-        {
-            BUDe::botRef->message_create(dpp::message(667402621333798923, EmbedBuilder::BasicEmbed(dpp::colours::aqua,
-                std::get<std::string>(event.get_parameter("title")),
-                std::get<std::string>(event.get_parameter("text")))));
 
-            event.reply("Announcement has been sent.");
+        for(auto& cmd : BUDe::commands) {
+            if(cmd->commandName == event.command.get_command_name()) {
+                // The command was right, but it's disabled, so we just want to break the for loop.
+                // or, the command is private and the user executing the command isn't me.
+                if(!cmd->Enabled() || (cmd->Private() && event.command.usr.id.str() != "447098177879932939"))
+                    break;
+
+                cmd->Execute(event);
+                break;
+            }
         }
-        else if (event.command.get_command_name() == "credits")
-        {
-            std::string str;
-
-            str = std::string("Thank you for using BUD-e! I greatly appreciate it and, from the bottom of my heart, I love you.\n") +
-                std::string("\n") +
-                std::string("Creator & Developer - Archie Jaskowicz (@JaskowiczArchie, jaskowicz)\n") +
-                std::string("BUD-e's Discord - https://bude.rocketeersgaming.net\n") +
-                std::string("Rocketeers Discord - https://discord.rocketeersgaming.net\n") +
-                std::string("Add BUD-e to another server - https://basicutilitydroid.io\n") +
-                std::string("\n") +
-                std::string("APIs used:\n") +
-                std::string("- D++\n") +
-                std::string("\n") +
-                std::string("Again, Thank you for all the support. I love you all and I'm so happy to see you using BUD-e once again.");
-
-            event.reply(dpp::message(event.command.channel_id, EmbedBuilder::BasicEmbed(dpp::colours::aqua,
-                "BUD-e - Credits.",
-                str)));
-        }
-
     });
 
     /* Register slash command here in on_ready */
     BUDe::botRef->on_ready([&](const dpp::ready_t& event) {
 
-        BUDe::botRef->log(dpp::ll_info, "Bot is now ready.");
-
-        /* Wrap command registration in run_once to make sure it doesnt run on every full reconnection */
+        /* Wrap command registration in run_once to make sure it doesn't run on every full reconnection */
         if (dpp::run_once<struct register_bot_commands>()) {
 
             BUDe::botRef->log(dpp::ll_info, "Bot is registering commands.");
 
-            // ---------------------------------------------------------------------------------------
-            // All global commands.
+            std::vector<dpp::slashcommand> tempCommands;
+            std::vector<dpp::slashcommand> tempCommandsPrivate;
 
-            dpp::slashcommand ping("ping", "Ping pong!", BUDe::botRef->me.id);
-            dpp::slashcommand pong("pong", "Pong ping!", BUDe::botRef->me.id);
-            dpp::slashcommand credits("credits", "Credits of BUD-e.", BUDe::botRef->me.id);
+            for(auto& cmd : BUDe::commands)
+            {
+                dpp::slashcommand tempCommand(cmd->commandName, cmd->commandDescription, BUDe::botRef->me.id);
+
+                for(dpp::command_option& option : cmd->CommandOptions())
+                    tempCommand.add_option(option);
+
+                if(cmd->Private()) // If command is private add to private list.
+                    tempCommandsPrivate.emplace_back(tempCommand);
+                else // otherwise, add to normal commands.
+                    tempCommands.emplace_back(tempCommand);
+            }
 
             // Bulk create because otherwise we'll get nuked by rate limits.
-            BUDe::botRef->global_bulk_command_create({ping, pong, credits});
+            BUDe::botRef->global_bulk_command_create(tempCommands);
 
-            // ---------------------------------------------------------------------------------------
-            // All guild commands just for BUD-e's Tower.
-
-            dpp::slashcommand rps("rps", "Play Rock, Paper, Scissors!", BUDe::botRef->me.id);
-            dpp::slashcommand announcement("announcement", "Create an announcement for BUD-e's tower.", BUDe::botRef->me.id);
-
-            /*
-            embedtesttwo
-                .add_option(dpp::command_option(dpp::co_string, "colour", "The colour of the embed", true))
-                .add_option(dpp::command_option(dpp::co_string, "title", "The title of the embed", true))
-                .add_option(dpp::command_option(dpp::co_string, "description", "The description of the embed", true));
-                */
-
-            announcement
-                .add_option(dpp::command_option(dpp::co_string, "title", "The title of the announcement", true))
-                .add_option(dpp::command_option(dpp::co_string, "text", "The announcement text", true));
-
-            BUDe::botRef->guild_bulk_command_create({rps, announcement}, 667401873233543173);
+            BUDe::botRef->guild_bulk_command_create(tempCommandsPrivate, 667401873233543173);
 
             BUDe::botRef->log(dpp::ll_info, "Bot has completed registering commands.");
         }
 
-        // Message for status here doesn't matter, won't get sent anyways.
+        // Message for status here doesn't matter, won't get sent anyway.
         BUDe::botRef->set_presence(dpp::presence(dpp::presence_status::ps_online, dpp::activity_type::at_custom, ""));
 
         // Create a thread to handle all the status changing.
         std::thread presenceThread(BUDe::ChangeStatusThread);
 
-        // Turn into daemon process so it's not reliant on main thread.
-        // We never have to communicate with this thread so it's okay.
+        // Turn into daemon process, so it's not reliant on main thread.
+        // We never have to communicate with this thread, so it's okay.
         presenceThread.detach();
 
         BUDe::botRef->message_create(dpp::message(667405048267014164,
             EmbedBuilder::BasicEmbedWithTimestamp(dpp::colours::green,
                 "All systems are online, Captain!",
                 "All systems have booted online and are ready to go!")));
+
+        BUDe::botRef->log(dpp::ll_info, "BUD-e is now ready.");
     });
 
     signal(SIGINT, BUDe::callback_handler);
@@ -171,7 +123,7 @@ void BUDe::callback_handler(int signum)
 void BUDe::ChangeStatusThread() {
 
     std::this_thread::sleep_for(std::chrono::seconds(10));
-    // Change status here so we don't end up with 5 minutes of no status.
+    // Change status here, so we don't end up with 5 minutes of no status.
     DoStatusChange();
 
     while (true) {
@@ -202,8 +154,6 @@ void BUDe::DoStatusChange() {
         newStatus = std::regex_replace(newStatus, std::regex("\\$watching "), "");
         type = dpp::activity_type::at_watching;
     }
-    
-    newStatus = std::regex_replace(newStatus, std::regex("\\$servers"), "" + BUDe::botRef->current_user_get_guilds_sync().size());
 
     // Get a random status message and set the bot's presence to it.
     BUDe::botRef->set_presence(dpp::presence(dpp::presence_status::ps_online, type, newStatus));
