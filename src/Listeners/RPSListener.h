@@ -22,9 +22,6 @@ public:
         std::string aiChoiceEmoji;
         std::string result;
 
-        dpp::embed_footer footer;
-        footer.set_text("Invoked by: " + event.command.usr.username);
-
         switch(aiChoiceNUM) {
             default:
                 aiChoice = "rock";
@@ -46,8 +43,8 @@ public:
             // what even happened to the damn indentation????????????????
             event.edit_original_response(
                     dpp::message(event.command.channel_id,
-                      EmbedBuilder::BasicEmbedWithFooter(dpp::colours::aqua,result,
-                      "I picked " + aiChoiceEmoji + "! Pick a choice to play again!", footer))
+                      EmbedBuilder::BasicEmbed(dpp::colours::aqua,result,
+                      "I picked " + aiChoiceEmoji + "! Pick a choice to play again!"))
                       .add_component(
                               dpp::component()
                               .add_component(
@@ -93,8 +90,8 @@ public:
         // I don't even want to talk about how ugly this looks. I am going to have nightmares about this.
         event.edit_original_response(
                 dpp::message(event.command.channel_id,
-                             EmbedBuilder::BasicEmbedWithFooter(dpp::colours::aqua,result,
-                                                                "I picked " + aiChoiceEmoji + "! Pick a choice to play again!", footer))
+                             EmbedBuilder::BasicEmbed(dpp::colours::aqua,result,
+                                                                "I picked " + aiChoiceEmoji + "! Pick a choice to play again!"))
                         .add_component(
                                 dpp::component()
                                         .add_component(
