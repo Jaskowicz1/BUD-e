@@ -6,7 +6,7 @@ class RPSCommand : public Command {
 
 public:
 
-    RPSCommand() : Command("RPS", "Play Rock, Paper, Scissors!") {};
+    RPSCommand() : Command("rps", "Play Rock, Paper, Scissors!") {};
 
     void Execute(const dpp::slashcommand_t& event) override {
         event.reply(dpp::message(event.command.channel_id, EmbedBuilder::BasicEmbed(dpp::colours::aqua,

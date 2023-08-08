@@ -6,7 +6,7 @@ class PongCommand : public Command {
 
 public:
 
-    PongCommand() : Command("Pong", "Pong Ping!") {};
+    PongCommand() : Command("pong", "Pong Ping!") {};
 
     void Execute(const dpp::slashcommand_t& event) override {
         event.reply("Ping!");

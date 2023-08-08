@@ -8,14 +8,14 @@ class AnnouncementCommand : public Command {
 
 public:
 
-    AnnouncementCommand() : Command("Announcement", "Create an announcement for BUD-e's tower.") {};
+    AnnouncementCommand() : Command("announcement", "Create an announcement for BUD-e's tower.") {};
 
     void Execute(const dpp::slashcommand_t& event) override {
         BUDe::botRef->message_create(dpp::message(667402621333798923, EmbedBuilder::BasicEmbed(dpp::colours::aqua,
            std::get<std::string>(event.get_parameter("title")),
            std::get<std::string>(event.get_parameter("text")))));
 
-        event.reply("AnnouncementCommand has been sent.");
+        event.reply("Announcement has been sent.");
     };
 
     std::vector<dpp::command_option> CommandOptions() override {
