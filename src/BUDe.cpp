@@ -33,7 +33,9 @@ int main(int argc, char *argv[])
             event.reply("Ping!");
         }
         else if (event.command.get_command_name() == "rps" || event.command.get_command_name() == "rockpaperscissors") {
-            event.reply(dpp::message(event.command.channel_id, "test")
+            event.reply(dpp::message(event.command.channel_id, EmbedBuilder::BasicEmbed(dpp::colours::aqua,
+                "Rock, Paper Scissors!",
+                "Let's play rock, paper, scissors! You pick and I'll pick!"))
             .add_component (
                 dpp::component().add_component(
                     dpp::component().set_label("Rock").
