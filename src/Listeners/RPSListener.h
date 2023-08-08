@@ -14,11 +14,15 @@ public:
         std::random_device rd;
         std::mt19937 gen(rd());
         std::uniform_int_distribution<> distrib(0, 2);
+        int aiChoiceNUM = distrib(gen);
+
+        std::cout << "AI CHOICE: " << aiChoiceNUM << "\n";
+
 
         std::string aiChoice;
         std::string result;
 
-        switch(distrib(gen)) {
+        switch(aiChoiceNUM) {
             case 0:
                 aiChoice = "rock";
                 break;
