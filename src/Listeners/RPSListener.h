@@ -41,7 +41,7 @@ public:
             result = "Draw!";
 
             // what even happened to the damn indentation????????????????
-            event.edit_original_response(
+            event.edit_response(
                     dpp::message(event.command.channel_id,
                       EmbedBuilder::BasicEmbed(dpp::colours::aqua,result,
                       "I picked " + aiChoiceEmoji + "! Pick a choice to play again!"))
@@ -88,7 +88,7 @@ public:
             result = "I won!";
 
         // I don't even want to talk about how ugly this looks. I am going to have nightmares about this.
-        event.edit_original_response(
+        event.edit_response(
                 dpp::message(event.command.channel_id,
                              EmbedBuilder::BasicEmbed(dpp::colours::aqua,result,
                                                                 "I picked " + aiChoiceEmoji + "! Pick a choice to play again!"))
