@@ -3,6 +3,7 @@
 #include "Commands/PongCommand.h"
 #include "Commands/PingCommand.h"
 #include "Commands/CreditsCommand.h"
+#include "Listeners/RPSListener.h"
 #include <random>
 #include <regex>
 
@@ -53,6 +54,8 @@ int main(int argc, char *argv[])
             }
         }
     });
+
+    BUDe::botRef->on_button_click(&RPSListener::OnButtonClick);
 
     /* Register slash command here in on_ready */
     BUDe::botRef->on_ready([&](const dpp::ready_t& event) {

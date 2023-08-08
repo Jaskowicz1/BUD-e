@@ -15,7 +15,7 @@ public:
            std::get<std::string>(event.get_parameter("title")),
            std::get<std::string>(event.get_parameter("text")))));
 
-        event.reply("Announcement has been sent.");
+        event.reply(dpp::message("Announcement has been sent.").set_flags(dpp::m_ephemeral));
     };
 
     std::vector<dpp::command_option> CommandOptions() override {

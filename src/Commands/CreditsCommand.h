@@ -7,7 +7,7 @@ class CreditsCommand : public Command {
 
 public:
 
-    CreditsCommand() : Command("Credits", "Credits of BUD-e.") {};
+    CreditsCommand() : Command("credits", "Credits of BUD-e.") {};
 
     void Execute(const dpp::slashcommand_t& event) override {
         std::string str;
@@ -26,7 +26,7 @@ public:
 
         event.reply(dpp::message(event.command.channel_id, EmbedBuilder::BasicEmbed(dpp::colours::aqua,
             "BUD-e - Credits.",
-            str)));
+            str)).set_flags(dpp::m_ephemeral));
     };
 
     bool Enabled() override {

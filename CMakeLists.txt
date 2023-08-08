@@ -18,6 +18,8 @@ add_executable (${PROJECT_NAME}
 		src/Commands/PongCommand.h
 		src/Commands/AnnouncementCommand.h
 		src/Commands/CreditsCommand.h
+		src/Listeners/RPSListener.h
+		src/Listeners/RPSListener.h
 )
 
 target_link_libraries(${PROJECT_NAME}
