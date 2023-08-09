@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Core/Command.h"
-#include "../EmbedBuilder.h"
+#include "../Utils/EmbedBuilder.h"
 #include "../BUDe.h"
 
 class AnnouncementCommand : public Command {
@@ -11,6 +11,7 @@ public:
     AnnouncementCommand() : Command("announcement", "Create an announcement for BUD-e's tower.") {};
 
     void Execute(const dpp::slashcommand_t& event) override {
+        // Channel ID can be public here, not bothered because only BUD-e has write perms in there.
         BUDe::botRef->message_create(dpp::message(667402621333798923, EmbedBuilder::BasicEmbed(dpp::colours::aqua,
            std::get<std::string>(event.get_parameter("title")),
            std::get<std::string>(event.get_parameter("text")))));

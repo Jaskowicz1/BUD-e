@@ -38,16 +38,11 @@ int main(int argc, char *argv[])
 
     BUDe::botRef->on_slashcommand([&](const dpp::slashcommand_t& event) {
         for(auto& cmd : BUDe::commands) {
-            std::cout << "COMMAND: " << cmd->commandName << "\n";
             if(cmd->commandName == event.command.get_command_name()) {
-                std::cout << "That is our command!!" << "\n";
                 // The command was right, but it's disabled, so we just want to break the for loop.
                 // or, the command is private and the user executing the command isn't me.
                 if(!cmd->Enabled() || (cmd->Private() && event.command.usr.id.str() != "447098177879932939"))
-                {
-                    std::cout << "either disabled or private." << "\n";
                     break;
-                }
 
                 cmd->Execute(event);
                 break;

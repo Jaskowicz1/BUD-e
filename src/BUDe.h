@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "EmbedBuilder.h"
+#include "Utils/EmbedBuilder.h"
 #include "Commands/Core/Command.h"
 #include "Commands/RPSCommand.h"
 

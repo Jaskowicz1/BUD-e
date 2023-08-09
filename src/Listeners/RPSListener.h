@@ -2,7 +2,8 @@
 
 #include <dpp/dpp.h>
 #include <random>
-#include "../EmbedBuilder.h"
+#include "../Utils/EmbedBuilder.h"
+#include "../Utils/ComponentBuilder.h"
 
 class RPSListener {
 
@@ -12,43 +13,19 @@ public:
 
         // Handle playing again.
         if(event.custom_id == "playagain") {
-            dpp::message msg;
 
-            msg.add_embed(
-            EmbedBuilder::BasicEmbed(dpp::colours::aqua,
-             "Rock, Paper Scissors!",
-             "Let's play rock, paper, scissors! You pick and I'll pick!"));
-
-            // I'm really considering turning this into a function or something because it looks ugly sitting here...
-            msg.add_component ( // Add component to message
-                dpp::component() // comp class
-                    .add_component(
-                        dpp::component().set_label("Rock").
-                            set_type(dpp::cot_button).
-                            set_emoji(u8"🪨").
-                            set_style(dpp::cos_primary).
-                            set_id("rock")
-                    )
-                    .add_component(
-                        dpp::component().set_label("Paper").
-                            set_type(dpp::cot_button).
-                            set_emoji(u8"📰").
-                            set_style(dpp::cos_primary).
-                            set_id("paper")
-                    )
-                    .add_component(
-                        dpp::component().set_label("Scissors").
-                            set_type(dpp::cot_button).
-                            set_emoji(u8"✂️").
-                            set_style(dpp::cos_primary).
-                            set_id("scissors")
-                    )
+            dpp::message msg(event.command.channel_id,
+                             EmbedBuilder::BasicEmbed(dpp::colours::aqua,
+                            "Rock, Paper Scissors!",
+                            "Let's play rock, paper, scissors! You pick and I'll pick!")
             );
 
-            //event.reply(msg);
-            event.reply(dpp::ir_update_message, msg);
+            // this is now nice :)
+            ComponentBuilder::AddButtonToMessage(msg, "Rock", "rock", u8"🪨");
+            ComponentBuilder::AddButtonToMessage(msg, "Paper", "paper", u8"📰");
+            ComponentBuilder::AddButtonToMessage(msg, "Scissors", "scissors", u8"✂️");
 
-            //BUDe::botRef->message_delete(event.command.get_context_message().id, event.command.get_context_message().channel_id);
+            event.reply(dpp::ir_update_message, msg);
 
             return;
         }
@@ -66,6 +43,9 @@ public:
         std::string aiChoiceEmoji;
         std::string playerChoiceEmoji;
         std::string result;
+
+        // this switch and the next two if statements really do not feel like a good solution.
+        // but it works so let's just leave it.
 
         switch(aiChoiceNUM) {
             default:
@@ -106,28 +86,14 @@ public:
         else // Assume that player picked the same as BUD-e.
             result = "Draw!";
 
-        dpp::message msg;
-
-        msg.add_embed(EmbedBuilder::BasicEmbed(dpp::colours::aqua,result,
-                                               "I picked " + aiChoiceEmoji + " and you picked " + playerChoiceEmoji + "! Press the button below to play again!"));
-
-        // I'm really considering turning this into a function or something because it looks ugly sitting here...
-        msg.add_component(
-            dpp::component()
-                .add_component(
-                    dpp::component().set_label("Play Again").
-                        set_type(dpp::cot_button).
-                        set_emoji(u8"🎮").
-                        set_style(dpp::cos_primary).
-                        set_id("playagain")
-                )
+        dpp::message msg(event.command.channel_id,
+                         EmbedBuilder::BasicEmbed(dpp::colours::aqua,result,
+                      "I picked " + aiChoiceEmoji + " and you picked " + playerChoiceEmoji + "! Press the button below to play again!")
         );
 
-        // Need to reply otherwise interaction "fails".
-        //event.reply(msg);
-        event.reply(dpp::ir_update_message, msg);
+        ComponentBuilder::AddButtonToMessage(msg, "Play Again", "playagain", u8"🎮");
 
-        //BUDe::botRef->message_delete(event.command.get_context_message().id, event.command.get_context_message().channel_id);
+        event.reply(dpp::ir_update_message, msg);
     }
 
 };

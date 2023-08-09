@@ -11,15 +11,17 @@ add_subdirectory(libs/DPP)
 add_executable (${PROJECT_NAME} 
 		src/BUDe.cpp
 		src/BUDe.h
-		src/EmbedBuilder.h
 		src/Commands/Core/Command.h
 		src/Commands/PingCommand.h
 		src/Commands/RPSCommand.h
 		src/Commands/PongCommand.h
 		src/Commands/AnnouncementCommand.h
 		src/Commands/CreditsCommand.h
+		src/Commands/ServerInfoCommand.h
+		src/Commands/UserInfoCommand.h
 		src/Listeners/RPSListener.h
-		src/Listeners/RPSListener.h
+		src/Utils/ComponentBuilder.h
+		src/Utils/EmbedBuilder.h
 )
 
 target_link_libraries(${PROJECT_NAME}

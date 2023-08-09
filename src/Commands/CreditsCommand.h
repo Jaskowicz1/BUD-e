@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Core/Command.h"
-#include "../EmbedBuilder.h"
+#include "../Utils/EmbedBuilder.h"
 
 class CreditsCommand : public Command {
 
@@ -12,7 +12,7 @@ public:
     void Execute(const dpp::slashcommand_t& event) override {
         std::string str;
 
-        str = std::string("Thank you for using BUD-e! I greatly appreciate it and, from the bottom of my heart, I love you.\n") +
+        str = std::string("Thank you for using BUD-e! I greatly appreciate it!\n") +
               std::string("\n") +
               std::string("Creator & Developer - Archie Jaskowicz (@JaskowiczArchie, jaskowicz)\n") +
               std::string("BUD-e's Discord - https://bude.rocketeersgaming.net\n") +
@@ -22,7 +22,9 @@ public:
               std::string("APIs used:\n") +
               std::string("- D++\n") +
               std::string("\n") +
-              std::string("Again, Thank you for all the support. I love you all and I'm so happy to see you using BUD-e once again.");
+              std::string("Extra thanks to the people over at the D++ discord for helping me get everything working!") +
+              std::string("\n") +
+              std::string("Again, Thank you for all the support and thank you for using BUD-e!");
 
         event.reply(dpp::message(event.command.channel_id, EmbedBuilder::BasicEmbed(dpp::colours::aqua,
             "BUD-e - Credits.",
