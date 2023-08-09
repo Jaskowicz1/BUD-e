@@ -9,6 +9,7 @@ class RPSListener {
 public:
 
     static void OnButtonClick(const dpp::button_click_t& event) {
+
         if(event.custom_id != "rock" && event.custom_id != "paper" && event.custom_id != "scissors")
             return;
 
@@ -73,8 +74,10 @@ public:
             );
              */
 
-            event.edit_response(dpp::message(event.command.channel_id,EmbedBuilder::BasicEmbed(dpp::colours::aqua,result,
-                          "I picked " + aiChoiceEmoji + "! Pick a choice to play again!")));
+            event.edit_response(dpp::message(event.command.channel_id, "test"));
+
+            /*event.edit_response(dpp::message(event.command.channel_id,EmbedBuilder::BasicEmbed(dpp::colours::aqua,result,
+                          "I picked " + aiChoiceEmoji + "! Pick a choice to play again!")));*/
             return;
         }
 
@@ -93,8 +96,9 @@ public:
             result = "I won!";
 
         // I don't even want to talk about how ugly this looks. I am going to have nightmares about this.
-        event.edit_response(dpp::message(event.command.channel_id,EmbedBuilder::BasicEmbed(dpp::colours::aqua,result,
-                      "I picked " + aiChoiceEmoji + "! Pick a choice to play again!")));
+        /*event.edit_response(dpp::message(event.command.channel_id,EmbedBuilder::BasicEmbed(dpp::colours::aqua,result,
+                      "I picked " + aiChoiceEmoji + "! Pick a choice to play again!")));*/
+        event.edit_response(dpp::message(event.command.channel_id, "test"));
     }
 
 };
