@@ -13,7 +13,10 @@ public:
         // Handle playing again.
         if(event.custom_id == "playagain") {
             dpp::message msg = event.command.get_context_message();
-            msg.suppress_embeds();
+
+            msg.embeds.clear();
+            msg.components.clear();
+            
             msg.add_embed(
             EmbedBuilder::BasicEmbed(dpp::colours::aqua,
              "Rock, Paper Scissors!",
