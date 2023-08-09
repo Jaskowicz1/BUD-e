@@ -61,6 +61,7 @@ public:
 
         std::string aiChoice;
         std::string aiChoiceEmoji;
+        std::string playerChoiceEmoji;
         std::string result;
 
         switch(aiChoiceNUM) {
@@ -78,15 +79,24 @@ public:
                 break;
         }
 
+        if(event.custom_id == "rock") {
+            playerChoiceEmoji = u8"🪨";
+        } else if(event.custom_id == "paper") {
+            playerChoiceEmoji = u8"📰";
+        } else {
+            playerChoiceEmoji = u8"✂️";
+        }
+
         if(aiChoice == event.custom_id) {
             result = "Draw!";
 
             dpp::message msg = event.command.get_context_message();
 
             // remove all embeds.
-            msg.suppress_embeds();
+            msg.embeds.clear();
+            msg.components.clear();
             msg.add_embed(EmbedBuilder::BasicEmbed(dpp::colours::aqua,result,
-                                                   "I picked " + aiChoiceEmoji + "! Press the button below to play again!"));
+                                                   "I picked " + aiChoiceEmoji + " and you picked " + playerChoiceEmoji "! Press the button below to play again!"));
 
             msg.add_component(
                 dpp::component()
@@ -120,7 +130,8 @@ public:
         dpp::message msg = event.command.get_context_message();
 
         // remove all embeds.
-        msg.suppress_embeds();
+        msg.embeds.clear();
+        msg.components.clear();
         msg.add_embed(EmbedBuilder::BasicEmbed(dpp::colours::aqua,result,
                                                "I picked " + aiChoiceEmoji + "! Pick a choice to play again!"));
 
