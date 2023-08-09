@@ -45,9 +45,10 @@ public:
                     )
             );
 
-            event.reply(msg);
+            //event.reply(msg);
+            event.reply(dpp::ir_update_message, msg);
 
-            BUDe::botRef->message_delete(event.command.get_context_message().id, event.command.get_context_message().channel_id);
+            //BUDe::botRef->message_delete(event.command.get_context_message().id, event.command.get_context_message().channel_id);
 
             return;
         }
@@ -123,9 +124,10 @@ public:
         );
 
         // Need to reply otherwise interaction "fails".
-        event.reply(msg);
+        //event.reply(msg);
+        event.reply(dpp::ir_update_message, msg);
 
-        BUDe::botRef->message_delete(event.command.get_context_message().id, event.command.get_context_message().channel_id);
+        //BUDe::botRef->message_delete(event.command.get_context_message().id, event.command.get_context_message().channel_id);
     }
 
 };
