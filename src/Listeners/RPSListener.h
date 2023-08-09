@@ -12,10 +12,7 @@ public:
 
         // Handle playing again.
         if(event.custom_id == "playagain") {
-            dpp::message msg = event.command.get_context_message();
-
-            msg.embeds.clear();
-            msg.components.clear();
+            dpp::message msg;
 
             msg.add_embed(
             EmbedBuilder::BasicEmbed(dpp::colours::aqua,
@@ -48,7 +45,9 @@ public:
                     )
             );
 
-            BUDe::botRef->message_edit(msg);
+            event.reply(msg);
+
+            BUDe::botRef->message_delete(event.command.get_context_message().id, event.command.get_context_message().channel_id);
 
             return;
         }
@@ -90,36 +89,10 @@ public:
             playerChoiceEmoji = u8"✂️";
         }
 
-        if(aiChoice == event.custom_id) {
-            result = "Draw!";
-
-            dpp::message msg = event.command.get_context_message();
-
-            // remove all embeds.
-            msg.embeds.clear();
-            msg.components.clear();
-            msg.add_embed(EmbedBuilder::BasicEmbed(dpp::colours::aqua,result,
-                                                   "I picked " + aiChoiceEmoji + " and you picked " + playerChoiceEmoji + "! Press the button below to play again!"));
-
-            msg.add_component(
-                dpp::component()
-                    .add_component(
-                            dpp::component().set_label("Play Again!").
-                                    set_type(dpp::cot_button).
-                                    set_emoji(u8"🎮").
-                                    set_style(dpp::cos_primary).
-                                    set_id("playagain")
-                    )
-            );
-
-            BUDe::botRef->message_edit(msg);
-            return;
-        }
-
         // if BUD-e picked rock and player picked paper.
         if(aiChoice == "rock" && event.custom_id == "paper")
             result = "You won!";
-        else if(aiChoice == "rock" && event.custom_id == "scissors")
+        else if(aiChoice == "rock" && event.custom_id == "scissors") // so on...
             result = "I won!";
         else if(aiChoice == "paper" && event.custom_id == "rock")
             result = "You Won!";
@@ -129,12 +102,11 @@ public:
             result = "You won!";
         else if(aiChoice == "scissors" && event.custom_id == "paper")
             result = "I won!";
+        else // Assume that player picked the same as BUD-e.
+            result = "Draw!";
 
-        dpp::message msg = event.command.get_context_message();
+        dpp::message msg;
 
-        // remove all embeds.
-        msg.embeds.clear();
-        msg.components.clear();
         msg.add_embed(EmbedBuilder::BasicEmbed(dpp::colours::aqua,result,
                                                "I picked " + aiChoiceEmoji + " and you picked " + playerChoiceEmoji + "! Press the button below to play again!"));
 
@@ -150,8 +122,10 @@ public:
                 )
         );
 
-        // Edit the original message to say our new message.
-        BUDe::botRef->message_edit(msg);
+        // Need to reply otherwise interaction "fails".
+        event.reply(msg);
+
+        BUDe::botRef->message_delete(event.command.get_context_message().id, event.command.get_context_message().channel_id);
     }
 
 };
