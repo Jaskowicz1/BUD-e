@@ -11,7 +11,7 @@ public:
     static void OnButtonClick(const dpp::button_click_t& event) {
 
         // Handle playing again.
-        if(event.custom_id != "playagain") {
+        if(event.custom_id == "playagain") {
             dpp::message msg = event.command.get_context_message();
             msg.suppress_embeds();
             msg.add_embed(
@@ -132,7 +132,7 @@ public:
                         set_type(dpp::cot_button).
                         set_emoji(u8"🎮").
                         set_style(dpp::cos_primary).
-                        set_id("rock")
+                        set_id("playagain")
                 )
         );
 
