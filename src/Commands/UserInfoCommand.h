@@ -3,11 +3,11 @@
 #include "Core/Command.h"
 #include "../Utils/EmbedBuilder.h"
 
-class PongCommand : public Command {
+class UserInfoCommand : public Command {
 
 public:
 
-    PongCommand() : Command("userinfo", "Display information about a specific user.") {};
+    UserInfoCommand() : Command("userinfo", "Display information about a specific user.") {};
 
     void Execute(const dpp::slashcommand_t& event) override {
 

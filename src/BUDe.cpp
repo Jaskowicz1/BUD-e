@@ -4,6 +4,8 @@
 #include "Commands/PingCommand.h"
 #include "Commands/CreditsCommand.h"
 #include "Listeners/RPSListener.h"
+#include "Commands/ServerInfoCommand.h"
+#include "Commands/UserInfoCommand.h"
 #include <random>
 #include <regex>
 
@@ -35,6 +37,8 @@ int main(int argc, char *argv[])
     BUDe::commands.emplace_back(std::make_unique<PongCommand>());
     BUDe::commands.emplace_back(std::make_unique<AnnouncementCommand>());
     BUDe::commands.emplace_back(std::make_unique<CreditsCommand>());
+    BUDe::commands.emplace_back(std::make_unique<ServerInfoCommand>());
+    BUDe::commands.emplace_back(std::make_unique<UserInfoCommand>());
 
     BUDe::botRef->on_slashcommand([&](const dpp::slashcommand_t& event) {
         for(auto& cmd : BUDe::commands) {
