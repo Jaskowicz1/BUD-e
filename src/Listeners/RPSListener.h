@@ -74,10 +74,42 @@ public:
             );
              */
 
-            event.edit_response(dpp::message(event.command.channel_id, "test"));
+            dpp::message msg = event.command.get_context_message();
+
+            // remove all embeds.
+            msg.suppress_embeds();
+            msg.add_embed(EmbedBuilder::BasicEmbed(dpp::colours::aqua,result,
+                                                   "I picked " + aiChoiceEmoji + "! Pick a choice to play again!"));
 
             /*event.edit_response(dpp::message(event.command.channel_id,EmbedBuilder::BasicEmbed(dpp::colours::aqua,result,
                           "I picked " + aiChoiceEmoji + "! Pick a choice to play again!")));*/
+
+            msg.add_component(
+                dpp::component()
+                    .add_component(
+                            dpp::component().set_label("Rock").
+                                    set_type(dpp::cot_button).
+                                    set_emoji(u8"🪨").
+                                    set_style(dpp::cos_primary).
+                                    set_id("rock")
+                    )
+                    .add_component(
+                            dpp::component().set_label("Paper").
+                                    set_type(dpp::cot_button).
+                                    set_emoji(u8"📰").
+                                    set_style(dpp::cos_primary).
+                                    set_id("paper")
+                    )
+                    .add_component(
+                            dpp::component().set_label("Scissors").
+                                    set_type(dpp::cot_button).
+                                    set_emoji(u8"✂️").
+                                    set_style(dpp::cos_primary).
+                                    set_id("scissors")
+                    )
+            );
+
+            BUDe::botRef->message_edit(msg);
             return;
         }
 
@@ -99,6 +131,41 @@ public:
         /*event.edit_response(dpp::message(event.command.channel_id,EmbedBuilder::BasicEmbed(dpp::colours::aqua,result,
                       "I picked " + aiChoiceEmoji + "! Pick a choice to play again!")));*/
         event.edit_response(dpp::message(event.command.channel_id, "test"));
+
+        dpp::message msg = event.command.get_context_message();
+
+        // remove all embeds.
+        msg.suppress_embeds();
+        msg.add_embed(EmbedBuilder::BasicEmbed(dpp::colours::aqua,result,
+                                               "I picked " + aiChoiceEmoji + "! Pick a choice to play again!"));
+
+        // I'm really considering turning this into a function or something because it looks ugly sitting here.
+        msg.add_component(
+            dpp::component()
+                .add_component(
+                        dpp::component().set_label("Rock").
+                                set_type(dpp::cot_button).
+                                set_emoji(u8"🪨").
+                                set_style(dpp::cos_primary).
+                                set_id("rock")
+                )
+                .add_component(
+                        dpp::component().set_label("Paper").
+                                set_type(dpp::cot_button).
+                                set_emoji(u8"📰").
+                                set_style(dpp::cos_primary).
+                                set_id("paper")
+                )
+                .add_component(
+                        dpp::component().set_label("Scissors").
+                                set_type(dpp::cot_button).
+                                set_emoji(u8"✂️").
+                                set_style(dpp::cos_primary).
+                                set_id("scissors")
+                )
+        );
+
+        BUDe::botRef->message_edit(msg);
     }
 
 };
