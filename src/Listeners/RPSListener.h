@@ -16,7 +16,7 @@ public:
 
             msg.embeds.clear();
             msg.components.clear();
-            
+
             msg.add_embed(
             EmbedBuilder::BasicEmbed(dpp::colours::aqua,
              "Rock, Paper Scissors!",
@@ -99,7 +99,7 @@ public:
             msg.embeds.clear();
             msg.components.clear();
             msg.add_embed(EmbedBuilder::BasicEmbed(dpp::colours::aqua,result,
-                                                   "I picked " + aiChoiceEmoji + " and you picked " + playerChoiceEmoji "! Press the button below to play again!"));
+                                                   "I picked " + aiChoiceEmoji + " and you picked " + playerChoiceEmoji + "! Press the button below to play again!"));
 
             msg.add_component(
                 dpp::component()
@@ -136,7 +136,7 @@ public:
         msg.embeds.clear();
         msg.components.clear();
         msg.add_embed(EmbedBuilder::BasicEmbed(dpp::colours::aqua,result,
-                                               "I picked " + aiChoiceEmoji + "! Pick a choice to play again!"));
+                                               "I picked " + aiChoiceEmoji + " and you picked " + playerChoiceEmoji + "! Press the button below to play again!"));
 
         // I'm really considering turning this into a function or something because it looks ugly sitting here...
         msg.add_component(
