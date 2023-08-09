@@ -11,10 +11,10 @@ public:
 
     void Execute(const dpp::slashcommand_t& event) override {
 
-        dpp::message msg("");
-
         dpp::embed embed(EmbedBuilder::BasicEmbed(dpp::colours::aqua,"Showing information for: '" + event.command.get_guild().name + "':",
-                                 "This information is based on your server. If anything seems incorrect, contact the team (you can find me with /credits)!"));
+                                                  "This information is based on your server. If anything seems incorrect, contact the team (you can find me with /credits)!"));
+
+        dpp::message msg(event.command.channel_id, embed);
 
         dpp::embed_field membersField;
         membersField.name = "Member count:";
