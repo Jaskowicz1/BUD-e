@@ -72,27 +72,28 @@ public:
         }
 
         // if BUD-e picked rock and player picked paper.
-        if(aiChoice == "rock" && event.custom_id == "paper")
+        if(aiChoice == "rock" && event.custom_id == "paper") {
             result = "You won!";
-        else if(aiChoice == "rock" && event.custom_id == "scissors") // so on...
-            result = "I won!";
-        else if(aiChoice == "paper" && event.custom_id == "scissors")
-            result = "You Won!";
-        else if(aiChoice == "paper" && event.custom_id == "rock")
-            result = "I Won!";
-        else if(aiChoice == "scissors" && event.custom_id == "rock")
-            result = "You won!";
-        else if(aiChoice == "scissors" && event.custom_id == "paper")
-            result = "I won!";
-        else // Assume that player picked the same as BUD-e.
-            result = "Draw!";
-
-        if(result == "You Won!")
             resultColour = dpp::colours::green;
-        else if(result == "I Won!")
+        } else if(aiChoice == "rock" && event.custom_id == "scissors") {
+            result = "I won!";
             resultColour = dpp::colours::red;
-        else
+        } else if (aiChoice == "paper" && event.custom_id == "scissors") {
+            result = "You Won!";
+            resultColour = dpp::colours::green;
+        } else if (aiChoice == "paper" && event.custom_id == "rock") {
+            result = "I Won!";
+            resultColour = dpp::colours::red;
+        } else if (aiChoice == "scissors" && event.custom_id == "rock") {
+            result = "You won!";
+            resultColour = dpp::colours::green;
+        } else if (aiChoice == "scissors" && event.custom_id == "paper") {
+            result = "I won!";
+            resultColour = dpp::colours::red;
+        } else { // Assume that player picked the same as BUD-e.
+            result = "Draw!";
             resultColour = dpp::colours::yellow;
+        }
 
         dpp::message msg(event.command.channel_id,
                          EmbedBuilder::BasicEmbed(resultColour,result,
