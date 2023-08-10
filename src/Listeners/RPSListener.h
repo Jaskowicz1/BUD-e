@@ -43,6 +43,7 @@ public:
         std::string aiChoiceEmoji;
         std::string playerChoiceEmoji;
         std::string result;
+        uint32_t resultColour;
 
         // this switch and the next two if statements really do not feel like a good solution.
         // but it works so let's just leave it.
@@ -75,9 +76,9 @@ public:
             result = "You won!";
         else if(aiChoice == "rock" && event.custom_id == "scissors") // so on...
             result = "I won!";
-        else if(aiChoice == "paper" && event.custom_id == "rock")
-            result = "You Won!";
         else if(aiChoice == "paper" && event.custom_id == "scissors")
+            result = "You Won!";
+        else if(aiChoice == "paper" && event.custom_id == "rock")
             result = "I Won!";
         else if(aiChoice == "scissors" && event.custom_id == "rock")
             result = "You won!";
@@ -86,8 +87,15 @@ public:
         else // Assume that player picked the same as BUD-e.
             result = "Draw!";
 
+        if(result == "You Won!")
+            resultColour = dpp::colours::green;
+        else if(result == "I Won!")
+            resultColour = dpp::colours::red;
+        else
+            resultColour = dpp::colours::yellow;
+
         dpp::message msg(event.command.channel_id,
-                         EmbedBuilder::BasicEmbed(dpp::colours::aqua,result,
+                         EmbedBuilder::BasicEmbed(resultColour,result,
                       "I picked " + aiChoiceEmoji + " and you picked " + playerChoiceEmoji + "! Press the button below to play again!")
         );
 
