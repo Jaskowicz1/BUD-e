@@ -35,7 +35,7 @@ public:
 
         std::random_device rd;
         std::mt19937 gen(rd());
-        std::uniform_int_distribution<> distrib(0, 2);
+        std::uniform_int_distribution<int> distrib(0, 2);
 
         int aiChoiceNUM = distrib(gen);
 
@@ -44,6 +44,8 @@ public:
         std::string playerChoiceEmoji;
         std::string result;
         uint32_t resultColour;
+        
+        // ((100/3)/11) - 1 (bigger min-max allows more choice as 0-2 feels less random.
 
         // this switch and the next two if statements really do not feel like a good solution.
         // but it works so let's just leave it.
