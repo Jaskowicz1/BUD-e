@@ -11,8 +11,6 @@ public:
 
     void Execute(const dpp::slashcommand_t& event) override {
 
-        dpp::message msg("");
-
         dpp::embed embed(EmbedBuilder::BasicEmbed(dpp::colours::aqua,"Showing information for: '" + event.command.get_issuing_user().username + "':",
                                  "This information is based on your account. If anything seems incorrect, contact the team (you can find me with /credits)!"));
 
@@ -36,7 +34,9 @@ public:
         EmbedBuilder::AddFieldToEmbed(embed, idField);
 
         embed.set_footer("Data provided by Discord.", "");
-        embed.set_thumbnail(event.command.get_guild().get_icon_url());
+        embed.set_thumbnail(event.command.get_issuing_user().get_avatar_url());
+
+        dpp::message msg(event.command.channel_id, embed);
 
         msg.set_flags(dpp::m_ephemeral);
 

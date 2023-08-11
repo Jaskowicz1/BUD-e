@@ -15,7 +15,7 @@ public:
         dpp::embed embed = EmbedBuilder::BasicEmbed(dpp::colours::aqua,event.command.get_issuing_user().username + "'s Avatar!",
                                                    "Here's your avatar! You can right click the image to save it.");
 
-        embed.set_image(event.command.get_issuing_user().avatar.to_string());
+        embed.set_image(event.command.get_issuing_user().get_avatar_url());
 
         dpp::message msg(event.command.channel_id, embed);
 
