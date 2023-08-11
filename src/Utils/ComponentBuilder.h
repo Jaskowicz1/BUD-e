@@ -26,14 +26,16 @@ public:
         dpp::component component;
 
         for(const ComponentData& data : dataValues) {
-            component.set_label(data.label).
-                    set_type(dpp::cot_button).
-                    set_emoji(data.emoji).
-                    set_style(dpp::cos_primary).
-                    set_id(data.id);
+            component.add_component(dpp::component().
+                set_label(data.label).
+                set_type(dpp::cot_button).
+                set_emoji(data.emoji).
+                set_style(dpp::cos_primary).
+                set_id(data.id)
+            );
         }
 
         message.components.clear();
-        message.add_component(dpp::component().add_component(component));
+        message.add_component(component);
     }
 };
