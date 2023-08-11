@@ -20,14 +20,14 @@ public:
         membersField.is_inline = true;
 
         dpp::embed_field dateField;
-        membersField.name = "Date created:";
-        membersField.value = event.command.get_guild().get_creation_time();
-        membersField.is_inline = true;
+        dateField.name = "Date created:";
+        dateField.value = event.command.get_guild().get_creation_time();
+        dateField.is_inline = true;
 
         dpp::embed_field ownerField;
-        membersField.name = "Owner (id):";
-        membersField.value = event.command.get_guild().owner_id;
-        membersField.is_inline = true;
+        ownerField.name = "Owner (id):";
+        ownerField.value = event.command.get_guild().owner_id;
+        ownerField.is_inline = true;
 
         EmbedBuilder::AddFieldToEmbed(embed, membersField);
         EmbedBuilder::AddFieldToEmbed(embed, dateField);
@@ -37,8 +37,6 @@ public:
         embed.set_thumbnail(event.command.get_guild().get_icon_url());
 
         dpp::message msg(event.command.channel_id, embed);
-
-        //msg.set_flags(dpp::m_ephemeral);
 
         event.reply(msg);
     }

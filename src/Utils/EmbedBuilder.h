@@ -56,7 +56,7 @@ public:
         return currentEmbed;
     }
 
-    static inline void AddFieldToEmbed(dpp::embed& embed, const std::vector<dpp::embed_field>& fields)
+    static inline void AddFieldsToEmbed(dpp::embed& embed, const std::vector<dpp::embed_field>& fields)
     {
         for(const dpp::embed_field& field : fields)
         {

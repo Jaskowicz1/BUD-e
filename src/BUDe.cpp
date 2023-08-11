@@ -39,6 +39,7 @@ int main(int argc, char *argv[])
     BUDe::commands.emplace_back(std::make_unique<CreditsCommand>());
     BUDe::commands.emplace_back(std::make_unique<ServerInfoCommand>());
     BUDe::commands.emplace_back(std::make_unique<UserInfoCommand>());
+    BUDe::commands.emplace_back(std::make_unique<AvatarCommand>());
 
     BUDe::botRef->on_slashcommand([&](const dpp::slashcommand_t& event) {
         for(auto& cmd : BUDe::commands) {

@@ -19,6 +19,7 @@ add_executable (${PROJECT_NAME}
 		src/Commands/CreditsCommand.h
 		src/Commands/ServerInfoCommand.h
 		src/Commands/UserInfoCommand.h
+		src/Commands/AvatarCommand.h
 		src/Listeners/RPSListener.h
 		src/Utils/ComponentBuilder.h
 		src/Utils/EmbedBuilder.h
