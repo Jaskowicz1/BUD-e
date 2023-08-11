@@ -30,22 +30,24 @@ public:
             return;
         }
 
+        // If the event wasn't rock, nor paper, nor scissors, then just return.
+        // This handler is not made for anything else, and we've already handled playing again (if that was the case).
         if(event.custom_id != "rock" && event.custom_id != "paper" && event.custom_id != "scissors")
             return;
 
         std::random_device rd;
         std::mt19937 gen(rd());
-        std::uniform_int_distribution<int> distrib(0, 2);
+        std::uniform_int_distribution<int> distrib(0, 99);
 
-        int aiChoiceNUM = distrib(gen);
+        // This will return either 0, 1 or 2. Going from 0-99 means we have more to play with as
+        // 0-2 was yielding results that did not feel random.
+        int aiChoiceNUM = (distrib(gen)/33) - 1;
 
         std::string aiChoice;
         std::string aiChoiceEmoji;
         std::string playerChoiceEmoji;
         std::string result;
         uint32_t resultColour;
-        
-        // ((100/3)/11) - 1 (bigger min-max allows more choice as 0-2 feels less random.
 
         // this switch and the next two if statements really do not feel like a good solution.
         // but it works so let's just leave it.
@@ -104,6 +106,7 @@ public:
 
         ComponentBuilder::AddButtonToMessage(msg, "Play Again", "playagain", u8"🎮");
 
+        // Reply but edit previous message (need to reply or discord shows "interaction failed")
         event.reply(dpp::ir_update_message, msg);
     }
 
