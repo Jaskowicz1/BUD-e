@@ -22,7 +22,7 @@ public:
 
             // this is now nice :)
 
-            ComponentBuilder::AddButtonToMessage(msg, {ComponentData("Rock", "rock", u8"🪨"),
+            ComponentBuilder::AddButtonsToMessage(msg, {ComponentData("Rock", "rock", u8"🪨"),
                                                        ComponentData("Paper", "paper", u8"📰"),
                                                        ComponentData("Scissors", "scissors", u8"✂️")}
             );
