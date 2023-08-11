@@ -22,6 +22,7 @@ add_executable (${PROJECT_NAME}
 		src/Listeners/RPSListener.h
 		src/Utils/ComponentBuilder.h
 		src/Utils/EmbedBuilder.h
+		src/Utils/ComponentData.h
 )
 
 target_link_libraries(${PROJECT_NAME}

@@ -21,9 +21,11 @@ public:
             );
 
             // this is now nice :)
-            ComponentBuilder::AddButtonToMessage(msg, "Rock", "rock", u8"🪨");
-            ComponentBuilder::AddButtonToMessage(msg, "Paper", "paper", u8"📰");
-            ComponentBuilder::AddButtonToMessage(msg, "Scissors", "scissors", u8"✂️");
+
+            ComponentBuilder::AddButtonToMessage(msg, {ComponentData("Rock", "rock", u8"🪨"),
+                                                       ComponentData("Paper", "paper", u8"📰"),
+                                                       ComponentData("Scissors", "scissors", u8"✂️")}
+            );
 
             event.reply(dpp::ir_update_message, msg);
 
@@ -104,7 +106,7 @@ public:
                       "I picked " + aiChoiceEmoji + " and you picked " + playerChoiceEmoji + "! Press the button below to play again!")
         );
 
-        ComponentBuilder::AddButtonToMessage(msg, "Play Again", "playagain", u8"🎮");
+        ComponentBuilder::AddButtonToMessage(msg, ComponentData("Play Again", "playagain", u8"🎮"));
 
         // Reply but edit previous message (need to reply or discord shows "interaction failed")
         event.reply(dpp::ir_update_message, msg);

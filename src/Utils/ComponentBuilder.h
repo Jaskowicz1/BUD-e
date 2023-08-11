@@ -1,33 +1,39 @@
 #pragma once
 
 #include <dpp/dpp.h>
+#include "ComponentData.h"
 
 class ComponentBuilder {
 
 public:
 
-    static void AddButtonToMessage(dpp::message& message, const std::string& label, const std::string& id, const std::string& emoji = "") {
+    static void AddButtonToMessage(dpp::message& message, const ComponentData& data) {
 
         dpp::component component;
 
-        component.set_label(label).
+        component.set_label(data.label).
         set_type(dpp::cot_button).
-        set_emoji(emoji).
+        set_emoji(data.emoji).
         set_style(dpp::cos_primary).
-        set_id(id);
+        set_id(data.id);
 
-        // If we have no components, add the component to the message.
-        if(message.components.empty())
-            message.add_component(dpp::component().add_component(component));
-        else // otherwise, add the comp to the component. Otherwise, we end up with the buttons being on new lines.
-            message.components[0].add_component(component);
+        message.components.clear();
+        message.add_component(dpp::component().add_component(component));
+    }
 
-        /* This is how it's usually done (except it'd be .add_component(dpp:component().add_component());
-        if(message.components.empty()) {
-            message.add_component(component);
-        } else {
-            message.components[0].add_component(component);
+    static void AddButtonToMessage(dpp::message& message, const std::vector<ComponentData>& dataValues) {
+
+        dpp::component component;
+
+        for(const ComponentData& data : dataValues) {
+            component.set_label(data.label).
+                    set_type(dpp::cot_button).
+                    set_emoji(data.emoji).
+                    set_style(dpp::cos_primary).
+                    set_id(data.id);
         }
-         */
+
+        message.components.clear();
+        message.add_component(dpp::component().add_component(component));
     }
 };

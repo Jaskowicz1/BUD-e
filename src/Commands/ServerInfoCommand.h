@@ -29,7 +29,9 @@ public:
         membersField.value = event.command.get_guild().owner_id;
         membersField.is_inline = true;
 
-        EmbedBuilder::AddFieldToEmbed(embed, {membersField, dateField, ownerField});
+        EmbedBuilder::AddFieldToEmbed(embed, membersField);
+        EmbedBuilder::AddFieldToEmbed(embed, dateField);
+        EmbedBuilder::AddFieldToEmbed(embed, ownerField);
 
         embed.set_footer("Data provided by Discord.", "");
         embed.set_thumbnail(event.command.get_guild().get_icon_url());
