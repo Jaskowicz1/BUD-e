@@ -18,7 +18,7 @@ public:
 
         ComponentBuilder::AddButtonToMessage(msg, {ComponentData("Rock", "rock", u8"🪨"),
                                                    ComponentData("Paper", "paper", u8"📰"),
-                                                   ComponentData("Scissors", "scissors", u8"✂️")};
+                                                   ComponentData("Scissors", "scissors", u8"✂️")});
 
         event.reply(msg);
     }
