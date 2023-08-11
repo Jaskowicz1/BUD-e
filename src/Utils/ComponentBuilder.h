@@ -18,7 +18,11 @@ public:
             set_id(id)
         );
 
-        message.add_component(component);
+        // If we have no components, add the component to the message.
+        if(message.components.empty())
+            message.add_component(component);
+        else // otherwise, add the comp to the component. Otherwise, we end up with the buttons being on new lines.
+            message.components[0].add_component(component);
 
         /* This is how it's usually done (except it'd be .add_component(dpp:component().add_component());
         if(message.components.empty()) {

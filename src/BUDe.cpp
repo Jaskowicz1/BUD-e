@@ -107,6 +107,7 @@ int main(int argc, char *argv[])
     });
 
     signal(SIGINT, BUDe::callback_handler);
+    signal(SIGTERM, BUDe::callback_handler);
 
     /* Start the bot */
     BUDe::botRef->start(dpp::st_wait);
