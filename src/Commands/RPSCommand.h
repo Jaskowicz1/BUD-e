@@ -16,9 +16,9 @@ public:
                         "Let's play rock, paper, scissors! You pick and I'll pick!")
         );
 
-        ComponentBuilder::AddButtonToMessage(msg, ComponentData("Rock", "rock", u8"🪨"));
-        ComponentBuilder::AddButtonToMessage(msg, ComponentData("Paper", "paper", u8"📰"));
-        ComponentBuilder::AddButtonToMessage(msg, ComponentData("Scissors", "scissors", u8"✂️"));
+        ComponentBuilder::AddButtonToMessage(msg, {ComponentData("Rock", "rock", u8"🪨"),
+                                                   ComponentData("Paper", "paper", u8"📰"),
+                                                   ComponentData("Scissors", "scissors", u8"✂️")};
 
         event.reply(msg);
     }
