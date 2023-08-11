@@ -6,6 +6,7 @@
 #include "Listeners/RPSListener.h"
 #include "Commands/ServerInfoCommand.h"
 #include "Commands/UserInfoCommand.h"
+#include "Commands/AvatarCommand.h"
 #include <random>
 #include <regex>
 
