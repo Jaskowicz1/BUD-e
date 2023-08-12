@@ -13,7 +13,7 @@ public:
     void Execute(const dpp::slashcommand_t& event) override {
 
         if(event.command.get_issuing_user().id != 447098177879932939) {
-            event.reply("You do not have enough permissions to run this command!");
+            event.reply(dpp::message("You do not have enough permissions to run this command!").set_flags(dpp::m_ephemeral));
             return;
         }
 

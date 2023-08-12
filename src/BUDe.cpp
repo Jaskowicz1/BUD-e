@@ -8,6 +8,9 @@
 #include "Commands/ServerInfoCommand.h"
 #include "Commands/AvatarCommand.h"
 #include "Commands/AttachmentCommand.h"
+#include "Commands/EmbedCommand.h"
+#include "Commands/ButtonCommand.h"
+#include "Commands/MathCommand.h"
 #include <random>
 #include <regex>
 
@@ -42,6 +45,9 @@ int main(int argc, char *argv[])
     BUDe::commands.emplace_back(std::make_unique<ServerInfoCommand>());
     BUDe::commands.emplace_back(std::make_unique<AvatarCommand>());
     BUDe::commands.emplace_back(std::make_unique<AttachmentCommand>());
+    BUDe::commands.emplace_back(std::make_unique<EmbedCommand>());
+    BUDe::commands.emplace_back(std::make_unique<ButtonCommand>());
+    BUDe::commands.emplace_back(std::make_unique<MathCommand>());
 
     BUDe::botRef->on_slashcommand([&](const dpp::slashcommand_t& event) {
         for(auto& cmd : BUDe::commands) {
@@ -78,6 +84,13 @@ int main(int argc, char *argv[])
 
             std::vector<dpp::slashcommand> tempCommands;
             std::vector<dpp::slashcommand> tempCommandsPrivate;
+
+            dpp::slashcommand command("High Five", "Send a High Five!", bot.me.id);
+
+            command.set_type(dpp::ctxm_user);
+
+            // JUST TEMP FOR D++ DOCS.
+            tempCommandsPrivate.push_back(command);
 
             for(auto& cmd : BUDe::commands)
             {
