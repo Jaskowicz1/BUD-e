@@ -74,6 +74,14 @@ int main(int argc, char *argv[])
             event.reply("You clicked: " + event.custom_id);
     });
 
+    bot.on_button_click([&bot](const dpp::button_click_t & event) {
+        if (event.custom_id == "10") {
+            event.reply(dpp::message("You got it right!").set_flags(dpp::m_ephemeral));
+        } else {
+            event.reply(dpp::message("Wrong! Try again.").set_flags(dpp::m_ephemeral));
+        }
+    });
+
     /* Register slash command here in on_ready */
     BUDe::botRef->on_ready([&](const dpp::ready_t& event) {
 
