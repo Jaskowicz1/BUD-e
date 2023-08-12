@@ -96,7 +96,6 @@ int main(int argc, char *argv[])
             dpp::slashcommand command("High Five", "Send a High Five!", bot.me.id);
 
             command.set_type(dpp::ctxm_user);
-            command.set_type(dpp::ctxm_message);
 
             // JUST TEMP FOR D++ DOCS.
             tempCommandsPrivate.push_back(command);
