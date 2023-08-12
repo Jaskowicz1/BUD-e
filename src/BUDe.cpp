@@ -6,6 +6,7 @@
 #include "Listeners/RPSListener.h"
 #include "Commands/ServerInfoCommand.h"
 #include "Commands/AvatarCommand.h"
+#include "Commands/AttachmentCommand.h"
 #include <random>
 #include <regex>
 
@@ -39,6 +40,7 @@ int main(int argc, char *argv[])
     BUDe::commands.emplace_back(std::make_unique<CreditsCommand>());
     BUDe::commands.emplace_back(std::make_unique<ServerInfoCommand>());
     BUDe::commands.emplace_back(std::make_unique<AvatarCommand>());
+    BUDe::commands.emplace_back(std::make_unique<AttachmentCommand>());
 
     BUDe::botRef->on_slashcommand([&](const dpp::slashcommand_t& event) {
         for(auto& cmd : BUDe::commands) {
