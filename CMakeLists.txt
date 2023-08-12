@@ -20,10 +20,14 @@ add_executable (${PROJECT_NAME}
 		src/Commands/ServerInfoCommand.h
 		src/Commands/AvatarCommand.h
 		src/Commands/AttachmentCommand.h
+		src/Commands/EmbedCommand.h
 		src/Listeners/RPSListener.h
+		src/Listeners/HighFiveListener.h
 		src/Utils/ComponentBuilder.h
 		src/Utils/EmbedBuilder.h
 		src/Utils/ComponentData.h
+		src/Commands/ButtonCommand.h
+		src/Commands/MathCommand.h
 )
 
 target_link_libraries(${PROJECT_NAME}

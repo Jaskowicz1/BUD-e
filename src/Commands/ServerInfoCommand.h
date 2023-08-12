@@ -11,6 +11,11 @@ public:
 
     void Execute(const dpp::slashcommand_t& event) override {
 
+        if(!event.command.get_guild().base_permissions(&event.command.get_issuing_user()).has(dpp::permissions::p_administrator)) {
+            event.reply("You don't have access to run this.");
+            return;
+        }
+
         dpp::embed embed(EmbedBuilder::BasicEmbed(dpp::colours::aqua,"Showing information for: '" + event.command.get_guild().name + "':",
                                                   "This information is based on your server. If anything seems incorrect, contact the team (you can find me with /credits)!"));
 
