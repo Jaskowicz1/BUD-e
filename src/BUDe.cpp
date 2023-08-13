@@ -93,7 +93,9 @@ int main(int argc, char *argv[])
             std::vector<dpp::slashcommand> tempCommands;
             std::vector<dpp::slashcommand> tempCommandsPrivate;
 
-            dpp::slashcommand command("High Five", "Send a High Five!", bot.me.id);
+            dpp::slashcommand command;
+            command.set_name("High Five");
+            command.set_application_id(bot.me.id);
 
             command.set_type(dpp::ctxm_user);
 

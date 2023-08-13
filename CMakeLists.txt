@@ -28,6 +28,7 @@ add_executable (${PROJECT_NAME}
 		src/Utils/ComponentData.h
 		src/Commands/ButtonCommand.h
 		src/Commands/MathCommand.h
+        src/Commands/JoinCommand.h
 )
 
 target_link_libraries(${PROJECT_NAME}
