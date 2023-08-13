@@ -23,7 +23,7 @@ public:
 
         message_cache.store(&test);
 
-        dpp::message* find_msg = message_cache.find(std::get<std::string>(event.get_parameter("message_id")));
+        dpp::message* find_msg = message_cache.find(test.id.str());
 
         event.reply(find_msg->content);
 
