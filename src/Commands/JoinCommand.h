@@ -4,11 +4,11 @@
 #include "../Utils/EmbedBuilder.h"
 #include "../BUDe.h"
 
-class AttachmentCommand : public Command {
+class JoinCommand : public Command {
 
 public:
 
-    AttachmentCommand() : Command("attachment", "Send a testing attachment.") {};
+    JoinCommand() : Command("join", "join the call.") {};
 
     void Execute(const dpp::slashcommand_t& event) override {
         /* Get the guild */

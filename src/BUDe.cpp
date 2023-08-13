@@ -11,6 +11,7 @@
 #include "Commands/EmbedCommand.h"
 #include "Commands/ButtonCommand.h"
 #include "Commands/MathCommand.h"
+#include "Commands/JoinCommand.h"
 #include <random>
 #include <regex>
 
@@ -48,6 +49,7 @@ int main(int argc, char *argv[])
     BUDe::commands.emplace_back(std::make_unique<EmbedCommand>());
     BUDe::commands.emplace_back(std::make_unique<ButtonCommand>());
     BUDe::commands.emplace_back(std::make_unique<MathCommand>());
+    BUDe::commands.emplace_back(std::make_unique<JoinCommand>());
 
     BUDe::botRef->on_slashcommand([&](const dpp::slashcommand_t& event) {
         for(auto& cmd : BUDe::commands) {
