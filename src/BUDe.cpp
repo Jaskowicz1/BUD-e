@@ -112,8 +112,25 @@ int main(int argc, char *argv[])
             slashcommand2.add_option(dpp::command_option(dpp::co_channel, "text_channel","Choose an channel", true)
                                             .add_channel_type(dpp::CHANNEL_TEXT));
 
+            dpp::slashcommand slashcommand3("add_role", "Add ranked role", bot.me.id);
+            slashcommand3
+                    .add_option(dpp::command_option(dpp::co_string, "role_name",
+                                                    "Type a role name", true))
+                    .add_option(dpp::command_option(dpp::co_integer, "percent",
+                                                    "Type a percent", true))
+                    .add_option(dpp::command_option(dpp::co_boolean, "is_best_in_text",
+                                                    "Is best in text?", true))
+                    .add_option(dpp::command_option(dpp::co_boolean, "is_best_in_voice",
+                                                    "Is best in voice?", true));
+
+            dpp::slashcommand slashcommand4("delete_role", "Chose a variant", bot.me.id);
+            slashcommand4.add_option(dpp::command_option(
+                    dpp::co_mentionable, "mentionable", "Chose a variant", true));
+
             bot.global_command_create(slashcommand);
             bot.global_command_create(slashcommand2);
+            bot.global_command_create(slashcommand3);
+            bot.global_command_create(slashcommand4);
             //register_add_role_command(bot);
             //register_mentionable_command(bot, "delete_role");
             bot.global_command_create(dpp::slashcommand("test", "test test!", bot.me.id));
