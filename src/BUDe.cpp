@@ -109,7 +109,7 @@ int main(int argc, char *argv[])
                                             .add_channel_type(dpp::CHANNEL_TEXT));
 
             dpp::slashcommand slashcommand2("delete_white_list", "Choose text channel",bot.me.id);
-            slashcommand.add_option(dpp::command_option(dpp::co_channel, "text_channel","Choose an channel", true)
+            slashcommand2.add_option(dpp::command_option(dpp::co_channel, "text_channel","Choose an channel", true)
                                             .add_channel_type(dpp::CHANNEL_TEXT));
 
             bot.global_command_create(slashcommand);
