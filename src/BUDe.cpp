@@ -66,11 +66,6 @@ int main(int argc, char *argv[])
     BUDe::botRef->on_button_click(&RPSListener::OnButtonClick);
     BUDe::botRef->on_user_context_menu(&HighFiveListener::OnUserContextMenu);
 
-    BUDe::botRef->on_button_click([&bot](const dpp::button_click_t& event) {
-        /* Button clicks are still interactions, and must be replied to in some form to
-         * prevent the "this interaction has failed" message from Discord to the user.
-         */
-
     /* Register slash command here in on_ready */
     BUDe::botRef->on_ready([&](const dpp::ready_t& event) {
 
