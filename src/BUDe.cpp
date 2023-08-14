@@ -11,7 +11,6 @@
 #include "Commands/EmbedCommand.h"
 #include "Commands/ButtonCommand.h"
 #include "Commands/MathCommand.h"
-#include "Commands/JoinCommand.h"
 #include <random>
 #include <regex>
 
@@ -49,7 +48,6 @@ int main(int argc, char *argv[])
     BUDe::commands.emplace_back(std::make_unique<EmbedCommand>());
     BUDe::commands.emplace_back(std::make_unique<ButtonCommand>());
     BUDe::commands.emplace_back(std::make_unique<MathCommand>());
-    BUDe::commands.emplace_back(std::make_unique<JoinCommand>());
 
     BUDe::botRef->on_slashcommand([&](const dpp::slashcommand_t& event) {
         for(auto& cmd : BUDe::commands) {
@@ -72,17 +70,6 @@ int main(int argc, char *argv[])
         /* Button clicks are still interactions, and must be replied to in some form to
          * prevent the "this interaction has failed" message from Discord to the user.
          */
-        if(event.custom_id == "myid")
-            event.reply("You clicked: " + event.custom_id);
-    });
-
-    bot.on_button_click([&bot](const dpp::button_click_t & event) {
-        if (event.custom_id == "10") {
-            event.reply(dpp::message("You got it right!").set_flags(dpp::m_ephemeral));
-        } else {
-            event.reply(dpp::message("Wrong! Try again.").set_flags(dpp::m_ephemeral));
-        }
-    });
 
     /* Register slash command here in on_ready */
     BUDe::botRef->on_ready([&](const dpp::ready_t& event) {
