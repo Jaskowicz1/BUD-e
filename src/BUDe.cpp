@@ -104,6 +104,20 @@ int main(int argc, char *argv[])
             // JUST TEMP FOR D++ DOCS.
             tempCommandsPrivate.push_back(command);
 
+            dpp::slashcommand slashcommand("add_white_list", "Choose text channel",bot.me.id);
+            slashcommand.add_option(dpp::command_option(dpp::co_channel, "text_channel","Choose an channel", true)
+                                            .add_channel_type(dpp::CHANNEL_TEXT));
+
+            dpp::slashcommand slashcommand2("delete_white_list", "Choose text channel",bot.me.id);
+            slashcommand.add_option(dpp::command_option(dpp::co_channel, "text_channel","Choose an channel", true)
+                                            .add_channel_type(dpp::CHANNEL_TEXT));
+
+            bot.global_command_create(slashcommand);
+            bot.global_command_create(slashcommand2);
+            //register_add_role_command(bot);
+            //register_mentionable_command(bot, "delete_role");
+            bot.global_command_create(dpp::slashcommand("test", "test test!", bot.me.id));
+
             for(auto& cmd : BUDe::commands)
             {
                 dpp::slashcommand tempCommand(cmd->commandName, cmd->commandDescription, BUDe::botRef->me.id);

@@ -17,16 +17,6 @@ public:
             return;
         }
 
-        dpp::cache<dpp::message> message_cache;
-
-        dpp::message test("Announcement!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
-        message_cache.store(&test);
-
-        dpp::message* find_msg = message_cache.find(test.id.str());
-
-        event.reply(find_msg->content);
-
         // Channel ID can be public here, not bothered because only BUD-e has write perms in there.
         BUDe::botRef->message_create(dpp::message(667402621333798923, EmbedBuilder::BasicEmbed(dpp::colours::aqua,
            std::get<std::string>(event.get_parameter("title")),
