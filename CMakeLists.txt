@@ -3,7 +3,7 @@
 #
 cmake_minimum_required (VERSION 3.15)
 
-project ("BUDe"	VERSION 0.1 DESCRIPTION "A friendly discord bot!")
+project ("BUDe"	VERSION 0.5 DESCRIPTION "A friendly discord bot!")
 
 add_subdirectory(libs/DPP)
 
