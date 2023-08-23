@@ -28,6 +28,8 @@ add_executable (${PROJECT_NAME}
 		src/Utils/ComponentData.h
 		src/Commands/ButtonCommand.h
 		src/Commands/MathCommand.h
+        src/Listeners/message_listener.cpp
+        src/Listeners/message_listener.h
 )
 
 target_link_libraries(${PROJECT_NAME}

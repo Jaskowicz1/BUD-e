@@ -11,6 +11,7 @@
 #include "Commands/EmbedCommand.h"
 #include "Commands/ButtonCommand.h"
 #include "Commands/MathCommand.h"
+#include "Listeners/message_listener.h"
 #include <random>
 #include <regex>
 
@@ -65,6 +66,8 @@ int main(int argc, char *argv[])
 
     BUDe::botRef->on_button_click(&RPSListener::OnButtonClick);
     BUDe::botRef->on_user_context_menu(&HighFiveListener::OnUserContextMenu);
+
+    BUDe::botRef->on_message_create(&message_listener::on_message_create);
 
     /* Register slash command here in on_ready */
     BUDe::botRef->on_ready([&](const dpp::ready_t& event) {
