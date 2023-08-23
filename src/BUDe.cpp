@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 
 	BUDe::token = argv[1];
 	
-	dpp::cluster bot(BUDe::token);
+	dpp::cluster bot(BUDe::token, dpp::i_default_intents | dpp::i_message_content);
 
     BUDe::botRef = &bot;
 
