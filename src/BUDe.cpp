@@ -66,6 +66,16 @@ int main(int argc, char *argv[])
     BUDe::botRef->on_button_click(&RPSListener::OnButtonClick);
     BUDe::botRef->on_user_context_menu(&HighFiveListener::OnUserContextMenu);
 
+    /* The event is fired when the bot detects a message in any server and any channel it has access to. */
+    bot.on_message_create([&bot](const dpp::message_create_t& event) {
+        /* See if the message content contains the phrase we want to check for.
+         * If there's at least a single match, we reply and say it's not allowed.
+         */
+        if (event.msg.content.find("bad word") != std::string::npos) {
+            event.reply("That is not allowed here. Please, mind your language!", true);
+        }
+    });
+
     /* Register slash command here in on_ready */
     BUDe::botRef->on_ready([&](const dpp::ready_t& event) {
 
