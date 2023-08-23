@@ -66,6 +66,14 @@ int main(int argc, char *argv[])
     BUDe::botRef->on_button_click(&RPSListener::OnButtonClick);
     BUDe::botRef->on_user_context_menu(&HighFiveListener::OnUserContextMenu);
 
+    bot.on_slashcommand([&bot](const dpp::slashcommand_t & event) {
+        /* Check which command they ran */
+        if (event.command.get_command_name() == "hello") {
+            /* Reply to the user, but only let them see the response. */
+            event.reply(dpp::message("Hello! How are you today?").set_flags(dpp::m_ephemeral));
+        }
+    });
+
     /* Register slash command here in on_ready */
     BUDe::botRef->on_ready([&](const dpp::ready_t& event) {
 
@@ -103,6 +111,8 @@ int main(int argc, char *argv[])
             BUDe::botRef->global_bulk_command_create(tempCommands);
 
             BUDe::botRef->guild_bulk_command_create(tempCommandsPrivate, 667401873233543173);
+
+            bot.global_command_create(dpp::slashcommand("hello", "Hello there!", bot.me.id));
 
             BUDe::botRef->log(dpp::ll_info, "Bot has completed registering commands.");
         }
