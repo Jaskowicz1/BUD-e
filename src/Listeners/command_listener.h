@@ -1,16 +1,11 @@
-//
-// Created by archie on 25/08/23.
-//
+#pragma region
 
-#ifndef BUDE_COMMAND_LISTENER_H
-#define BUDE_COMMAND_LISTENER_H
-
-
+#include <dpp/dpp.h>
 
 class command_listener {
 
+public:
+
+    static void on_slashcommand(const dpp::slashcommand_t& event);
+
 };
-
-
-
-#endif //BUDE_COMMAND_LISTENER_H

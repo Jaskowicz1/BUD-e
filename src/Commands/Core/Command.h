@@ -8,7 +8,9 @@ class Command {
 
 public:
 
-    Command(std::string name, std::string description) : commandName(std::move(name)), commandDescription(std::move(description)) {};
+    Command(std::string_view name, std::string_view description) : commandName(name), commandDescription(description) {};
+
+    virtual ~Command() = default;
 
     virtual void Execute(const dpp::slashcommand_t& event) = 0;
 

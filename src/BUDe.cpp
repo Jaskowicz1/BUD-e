@@ -1,17 +1,13 @@
 ﻿#include "BUDe.h"
 #include "Commands/AnnouncementCommand.h"
-#include "Commands/PongCommand.h"
 #include "Commands/PingCommand.h"
 #include "Commands/CreditsCommand.h"
-#include "Listeners/RPSListener.h"
+#include "Listeners/rps_listener.h"
 #include "Listeners/HighFiveListener.h"
-#include "Commands/ServerInfoCommand.h"
 #include "Commands/AvatarCommand.h"
 #include "Commands/AttachmentCommand.h"
 #include "Commands/EmbedCommand.h"
-#include "Commands/ButtonCommand.h"
-#include "Commands/MathCommand.h"
-#include "Listeners/message_listener.h"
+#include "Listeners/command_listener.h"
 #include <random>
 #include <regex>
 
@@ -24,12 +20,6 @@ int main(int argc, char *argv[])
 		return 0;
 	}
 
-    /*
-    event.reply(dpp::message(event.command.channel_id, EmbedBuilder::BasicEmbed(dpp::colours::aqua,
-                std::get<std::string>(event.get_parameter("title")),
-                std::get<std::string>(event.get_parameter("description")))));
-    */
-
 	BUDe::token = argv[1];
 	
 	dpp::cluster bot(BUDe::token, dpp::i_default_intents | dpp::i_message_content);
@@ -40,34 +30,15 @@ int main(int argc, char *argv[])
 
     BUDe::commands.emplace_back(std::make_unique<RPSCommand>());
     BUDe::commands.emplace_back(std::make_unique<PingCommand>());
-    BUDe::commands.emplace_back(std::make_unique<PongCommand>());
     BUDe::commands.emplace_back(std::make_unique<AnnouncementCommand>());
     BUDe::commands.emplace_back(std::make_unique<CreditsCommand>());
-    BUDe::commands.emplace_back(std::make_unique<ServerInfoCommand>());
     BUDe::commands.emplace_back(std::make_unique<AvatarCommand>());
     BUDe::commands.emplace_back(std::make_unique<AttachmentCommand>());
     BUDe::commands.emplace_back(std::make_unique<EmbedCommand>());
-    BUDe::commands.emplace_back(std::make_unique<ButtonCommand>());
-    BUDe::commands.emplace_back(std::make_unique<MathCommand>());
 
-    BUDe::botRef->on_slashcommand([&](const dpp::slashcommand_t& event) {
-        for(auto& cmd : BUDe::commands) {
-            if(cmd->commandName == event.command.get_command_name()) {
-                // The command was right, but it's disabled, so we just want to break the for loop.
-                // or, the command is private and the user executing the command isn't me.
-                if(!cmd->Enabled() || (cmd->Private() && event.command.usr.id.str() != "447098177879932939"))
-                    break;
-
-                cmd->Execute(event);
-                break;
-            }
-        }
-    });
-
-    BUDe::botRef->on_button_click(&RPSListener::OnButtonClick);
-    BUDe::botRef->on_user_context_menu(&HighFiveListener::OnUserContextMenu);
-
-    BUDe::botRef->on_message_create(&message_listener::on_message_create);
+    bot.on_slashcommand(&command_listener::on_slashcommand);
+    bot.on_button_click(&rps_listener::on_button_click);
+    bot.on_user_context_menu(&HighFiveListener::OnUserContextMenu);
 
     /* Register slash command here in on_ready */
     BUDe::botRef->on_ready([&](const dpp::ready_t& event) {

@@ -11,12 +11,6 @@ public:
     AnnouncementCommand() : Command("announcement", "Create an announcement for BUD-e's tower.") {};
 
     void Execute(const dpp::slashcommand_t& event) override {
-
-        if(event.command.get_issuing_user().id != 447098177879932939) {
-            event.reply(dpp::message("You do not have enough permissions to run this command!").set_flags(dpp::m_ephemeral));
-            return;
-        }
-
         // Channel ID can be public here, not bothered because only BUD-e has write perms in there.
         BUDe::botRef->message_create(dpp::message(667402621333798923, EmbedBuilder::BasicEmbed(dpp::colours::aqua,
            std::get<std::string>(event.get_parameter("title")),

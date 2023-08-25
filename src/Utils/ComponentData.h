@@ -2,11 +2,8 @@
 
 struct ComponentData {
 
-    ComponentData(const std::string& _label, const std::string& _id, const std::string& _emoji) {
-        this->label = _label;
-        this->id = _id;
-        this->emoji = _emoji;
-    }
+    ComponentData(std::string_view _label, std::string_view _id, std::string_view _emoji)
+    : label(_label), id(_id), emoji(_emoji) {};
 
     std::string label;
     std::string id;
