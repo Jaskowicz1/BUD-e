@@ -1,6 +1,7 @@
 #include "command_listener.h"
 #include "../BUDe.h"
 
+
 void command_listener::on_slashcommand(const dpp::slashcommand_t &event) {
     for(auto& cmd : BUDe::commands) {
         if(cmd->commandName == event.command.get_command_name()) {

@@ -8,6 +8,8 @@
 #include "Commands/AttachmentCommand.h"
 #include "Commands/EmbedCommand.h"
 #include "Listeners/command_listener.h"
+#include "Utils/EmbedBuilder.h"
+#include "Commands/RPSCommand.h"
 #include <random>
 #include <regex>
 
@@ -50,15 +52,6 @@ int main(int argc, char *argv[])
 
             std::vector<dpp::slashcommand> tempCommands;
             std::vector<dpp::slashcommand> tempCommandsPrivate;
-
-            dpp::slashcommand command;
-            command.set_name("High Five");
-            command.set_application_id(bot.me.id);
-
-            command.set_type(dpp::ctxm_user);
-
-            // JUST TEMP FOR D++ DOCS.
-            tempCommandsPrivate.push_back(command);
 
             for(auto& cmd : BUDe::commands)
             {
