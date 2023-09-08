@@ -7,7 +7,7 @@ class ComponentBuilder {
 
 public:
 
-    static void AddButtonToMessage(dpp::message& message, const ComponentData& data) {
+    inline static void AddButtonToMessage(dpp::message& message, const ComponentData& data) {
 
         dpp::component component;
 
@@ -21,7 +21,7 @@ public:
         message.add_component(dpp::component().add_component(component));
     }
 
-    static void AddButtonsToMessage(dpp::message& message, const std::vector<ComponentData>& dataValues) {
+    inline static void AddButtonsToMessage(dpp::message& message, const std::vector<ComponentData>& dataValues) {
 
         dpp::component component;
 

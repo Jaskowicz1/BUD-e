@@ -2,6 +2,7 @@
 
 #include "Core/Command.h"
 #include "../Utils/ComponentBuilder.h"
+#include <dpp/unicode_emoji.h>
 
 class RPSCommand : public Command {
 
@@ -16,9 +17,9 @@ public:
                         "Let's play rock, paper, scissors! You pick and I'll pick!")
         );
 
-        ComponentBuilder::AddButtonsToMessage(msg, {ComponentData("Rock", "rock", u8"🪨"),
-                                                   ComponentData("Paper", "paper", u8"📰"),
-                                                   ComponentData("Scissors", "scissors", u8"✂️")});
+        ComponentBuilder::AddButtonsToMessage(msg, {ComponentData("Rock", "rock", dpp::unicode_emoji::rock),
+                                                   ComponentData("Paper", "paper", dpp::unicode_emoji::newspaper),
+                                                   ComponentData("Scissors", "scissors", dpp::unicode_emoji::scissors)});
 
         event.reply(msg);
     }

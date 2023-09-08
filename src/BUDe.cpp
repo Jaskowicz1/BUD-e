@@ -3,13 +3,14 @@
 #include "Commands/PingCommand.h"
 #include "Commands/CreditsCommand.h"
 #include "Listeners/rps_listener.h"
-#include "Listeners/HighFiveListener.h"
 #include "Commands/AvatarCommand.h"
 #include "Commands/AttachmentCommand.h"
 #include "Commands/EmbedCommand.h"
 #include "Listeners/command_listener.h"
 #include "Utils/EmbedBuilder.h"
 #include "Commands/RPSCommand.h"
+#include "Commands/PMCommand.h"
+#include "Commands/EchoCommand.h"
 #include <random>
 #include <regex>
 
@@ -37,10 +38,12 @@ int main(int argc, char *argv[])
     BUDe::commands.emplace_back(std::make_unique<AvatarCommand>());
     BUDe::commands.emplace_back(std::make_unique<AttachmentCommand>());
     BUDe::commands.emplace_back(std::make_unique<EmbedCommand>());
+    BUDe::commands.emplace_back(std::make_unique<PMCommand>());
+    BUDe::commands.emplace_back(std::make_unique<EchoCommand>());
 
     bot.on_slashcommand(&command_listener::on_slashcommand);
     bot.on_button_click(&rps_listener::on_button_click);
-    bot.on_user_context_menu(&HighFiveListener::OnUserContextMenu);
+    //bot.on_user_context_menu(&HighFiveListener::OnUserContextMenu);
 
     /* Register slash command here in on_ready */
     BUDe::botRef->on_ready([&](const dpp::ready_t& event) {
@@ -72,17 +75,11 @@ int main(int argc, char *argv[])
             BUDe::botRef->guild_bulk_command_create(tempCommandsPrivate, 667401873233543173);
 
             BUDe::botRef->log(dpp::ll_info, "Bot has completed registering commands.");
+
+            bot.start_timer([](const dpp::timer& timer) {
+                BUDe::DoStatusChange();
+            }, 120);
         }
-
-        // Message for status here doesn't matter, won't get sent anyway.
-        BUDe::botRef->set_presence(dpp::presence(dpp::presence_status::ps_online, dpp::activity_type::at_custom, ""));
-
-        // Create a thread to handle all the status changing.
-        std::thread presenceThread(BUDe::ChangeStatusThread);
-
-        // Turn into daemon process, so it's not reliant on main thread.
-        // We never have to communicate with this thread, so it's okay.
-        presenceThread.detach();
 
         BUDe::botRef->message_create(dpp::message(667405048267014164,
             EmbedBuilder::BasicEmbedWithTimestamp(dpp::colours::green,
@@ -90,6 +87,9 @@ int main(int argc, char *argv[])
                 "All systems have booted online and are ready to go!")));
 
         BUDe::botRef->log(dpp::ll_info, "BUD-e is now ready.");
+
+        // Call status change now.
+        BUDe::DoStatusChange();
     });
 
     signal(SIGINT, BUDe::callback_handler);
@@ -111,20 +111,6 @@ void BUDe::callback_handler(int signum)
     // Safely shut down the bot, meaning the bot actually shuts down when this stops rather than us leaving it in limbo.
     BUDe::botRef->shutdown();
     exit(signum);
-}
-
-void BUDe::ChangeStatusThread() {
-
-    std::this_thread::sleep_for(std::chrono::seconds(10));
-    // Change status here, so we don't end up with 5 minutes of no status.
-    DoStatusChange();
-
-    while (true) {
-        // Once every five minutes, don't want it changing too fast (Rate-Limit reasons and because it'd be silly).
-        std::this_thread::sleep_for(std::chrono::minutes(5));
-
-        DoStatusChange();
-    }
 }
 
 void BUDe::DoStatusChange() {

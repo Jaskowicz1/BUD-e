@@ -20,13 +20,17 @@ add_executable (${PROJECT_NAME}
 		src/Commands/AttachmentCommand.h
 		src/Commands/EmbedCommand.h
 		src/Listeners/rps_listener.h
-		src/Listeners/HighFiveListener.h
-		src/Utils/ComponentBuilder.h
+        src/Utils/ComponentBuilder.h
 		src/Utils/EmbedBuilder.h
 		src/Utils/ComponentData.h
 		src/Listeners/command_listener.cpp
         src/Listeners/command_listener.h
 		src/Listeners/rps_listener.cpp
+		src/Commands/EchoCommand.cpp
+		src/Commands/EchoCommand.h
+		src/Commands/EmbedCommand.cpp
+		src/Commands/PMCommand.cpp
+		src/Commands/PMCommand.h
 )
 
 target_link_libraries(${PROJECT_NAME}
