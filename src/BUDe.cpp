@@ -98,8 +98,6 @@ int main(int argc, char *argv[])
 
 		// Call status change now.
 		BUDe::DoStatusChange();
-
-		//bot.set_presence(dpp::presence(dpp::presence_status::ps_online, dpp::activity_type::at_custom, "Testing 123.."));
 	});
 
 	signal(SIGINT, BUDe::callback_handler);
