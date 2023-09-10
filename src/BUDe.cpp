@@ -97,9 +97,9 @@ int main(int argc, char *argv[])
 		BUDe::botRef->log(dpp::ll_info, "BUD-e is now ready.");
 
 		// Call status change now.
-		//BUDe::DoStatusChange();
+		BUDe::DoStatusChange();
 
-		bot.set_presence(dpp::presence(dpp::presence_status::ps_online, dpp::activity_type::at_custom, "Testing 123.."));
+		//bot.set_presence(dpp::presence(dpp::presence_status::ps_online, dpp::activity_type::at_custom, "Testing 123.."));
 	});
 
 	signal(SIGINT, BUDe::callback_handler);
