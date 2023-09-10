@@ -6,7 +6,7 @@ class EchoCommand : public Command {
 
 public:
 
-    EchoCommand() : Command("echo", "Send a message in a different channel.") {};
+    EchoCommand() : Command("echo", "Send a message in a different channel.", dpp::p_administrator) {};
 
     void Execute(const dpp::slashcommand_t& event) override;
 

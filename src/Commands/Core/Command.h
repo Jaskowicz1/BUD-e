@@ -8,7 +8,7 @@ class Command {
 
 public:
 
-    Command(std::string_view name, std::string_view description) : commandName(name), commandDescription(description) {};
+    Command(std::string_view name, std::string_view description, dpp::permissions permission = dpp::p_use_application_commands) : commandName(name), commandDescription(description), commandPermission(permission) {};
 
     virtual ~Command() = default;
 
@@ -29,5 +29,6 @@ public:
     
     std::string commandName;
     std::string commandDescription;
+    dpp::permissions commandPermission;
 
 };

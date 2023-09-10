@@ -11,6 +11,8 @@
 #include "Commands/RPSCommand.h"
 #include "Commands/PMCommand.h"
 #include "Commands/EchoCommand.h"
+#include "Commands/CreateThreadCommand.h"
+#include "Commands/MessageThreadCommand.h"
 #include <random>
 #include <regex>
 
@@ -40,8 +42,10 @@ int main(int argc, char *argv[])
 	BUDe::commands.emplace_back(std::make_unique<AvatarCommand>());
 	BUDe::commands.emplace_back(std::make_unique<AttachmentCommand>());
 	BUDe::commands.emplace_back(std::make_unique<EmbedCommand>());
-	BUDe::commands.emplace_back(std::make_unique<PMCommand>());
+	//BUDe::commands.emplace_back(std::make_unique<PMCommand>());
 	BUDe::commands.emplace_back(std::make_unique<EchoCommand>());
+	//BUDe::commands.emplace_back(std::make_unique<CreateThreadCommand>());
+	BUDe::commands.emplace_back(std::make_unique<MessageThreadCommand>());
 
 	bot.on_slashcommand(&command_listener::on_slashcommand);
 	bot.on_button_click(&rps_listener::on_button_click);
@@ -64,6 +68,8 @@ int main(int argc, char *argv[])
 
 				for(dpp::command_option& option : cmd->CommandOptions())
 				    	tempCommand.add_option(option);
+
+			    	tempCommand.set_default_permissions(cmd->commandPermission);
 
 				if(cmd->Private()) // If command is private add to private list.
 				    	tempCommandsPrivate.emplace_back(tempCommand);
@@ -91,7 +97,9 @@ int main(int argc, char *argv[])
 		BUDe::botRef->log(dpp::ll_info, "BUD-e is now ready.");
 
 		// Call status change now.
-		BUDe::DoStatusChange();
+		//BUDe::DoStatusChange();
+
+		bot.set_presence(dpp::presence(dpp::presence_status::ps_online, dpp::activity_type::at_custom, "Testing 123.."));
 	});
 
 	signal(SIGINT, BUDe::callback_handler);

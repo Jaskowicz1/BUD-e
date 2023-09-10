@@ -31,6 +31,11 @@ add_executable (${PROJECT_NAME}
 		src/Commands/EmbedCommand.cpp
 		src/Commands/PMCommand.cpp
 		src/Commands/PMCommand.h
+        src/Commands/CreateThreadCommand.cpp
+        src/Commands/CreateThreadCommand.h
+		src/Commands/MessageThreadCommand.cpp
+		src/Commands/MessageThreadCommand.h
+        src/Commands/AvatarCommand.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}

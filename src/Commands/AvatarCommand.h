@@ -10,26 +10,16 @@ public:
 
     AvatarCommand() : Command("avatar", "Display your avatar as a downloadable image!") {};
 
-    void Execute(const dpp::slashcommand_t& event) override {
+    void Execute(const dpp::slashcommand_t& event) override;
 
-        dpp::embed embed = EmbedBuilder::BasicEmbed(dpp::colours::aqua,event.command.get_issuing_user().username + "'s Avatar!",
-                                                   "Here's your avatar! You can right click the image to save it.");
-
-        embed.set_image(event.command.get_issuing_user().get_avatar_url());
-
-        dpp::message msg(event.command.channel_id, embed);
-
-        msg.set_flags(dpp::m_ephemeral);
-
-        event.reply(msg);
+    std::vector<dpp::command_option> CommandOptions() override {
+	std::vector<dpp::command_option> temp;
+	temp.emplace_back(dpp::co_mentionable, "user", "The user's avatar to retrieve.", false);
+	return temp;
     }
 
     bool Enabled() override {
         return true;
-    }
-
-    bool Private() override {
-        return false;
     }
 
 };
