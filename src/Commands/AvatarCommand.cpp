@@ -17,7 +17,7 @@ void AvatarCommand::Execute(const dpp::slashcommand_t &event) {
 	dpp::embed embed = EmbedBuilder::BasicEmbed(dpp::colours::aqua,usr.username + "'s Avatar!",
 						    "Here's " + usr.username + "'s avatar! You can right click the image to save it.");
 
-	embed.set_image(usr.get_avatar_url());
+	embed.set_image(usr.get_avatar_url(256));
 
 	dpp::message msg(event.command.channel_id, embed);
 
