@@ -26,7 +26,7 @@ public:
               std::string("\n") +
               std::string("Again, Thank you for all the support and thank you for using BUD-e!");
 
-	event.co_reply(dpp::message(event.command.channel_id, EmbedBuilder::BasicEmbed(dpp::colours::aqua,
+	co_return event.reply(dpp::message(event.command.channel_id, EmbedBuilder::BasicEmbed(dpp::colours::aqua,
             "BUD-e - Credits.",
             str)).set_flags(dpp::m_ephemeral));
     };
