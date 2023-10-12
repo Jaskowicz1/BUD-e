@@ -6,8 +6,7 @@ dpp::coroutine<void> MicrowaveCommand::Execute(dpp::slashcommand_t event) {
 	std::string item = event.get_parameter("item").index() == 0 ? "food" : std::get<std::string>(event.get_parameter("item"));
 
 	if(item == BUDe::botRef->me.get_mention()) {
-		co_await event.co_reply(dpp::message("Beep Boop what are you doing step-cyborg?").set_flags(dpp::m_ephemeral));
-		co_return;
+		co_return event.reply(dpp::message("Beep Boop what are you doing step-cyborg?").set_flags(dpp::m_ephemeral));
 	}
 
 	co_await event.co_reply("mmmmmmmmmmmmmmmmmmmmmmmmmmm");
