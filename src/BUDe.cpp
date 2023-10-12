@@ -8,6 +8,7 @@
 #include "Utils/EmbedBuilder.h"
 #include "Commands/RPSCommand.h"
 #include "Commands/EchoCommand.h"
+#include "Commands/MicrowaveCommand.h"
 #include <random>
 #include <regex>
 
@@ -35,6 +36,7 @@ int main(int argc, char *argv[])
 	BUDe::commands.emplace_back(std::make_unique<CreditsCommand>());
 	BUDe::commands.emplace_back(std::make_unique<AvatarCommand>());
 	BUDe::commands.emplace_back(std::make_unique<EchoCommand>());
+	BUDe::commands.emplace_back(std::make_unique<MicrowaveCommand>());
 
 	bot.on_slashcommand(command_listener::on_slashcommand);
 	bot.on_button_click(rps_listener::on_button_click);
