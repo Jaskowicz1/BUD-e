@@ -10,7 +10,7 @@ public:
 
     AvatarCommand() : Command("avatar", "Display your avatar as a downloadable image!") {};
 
-    void Execute(const dpp::slashcommand_t& event) override;
+    dpp::coroutine<void> Execute(dpp::slashcommand_t event) override;
 
     std::vector<dpp::command_option> CommandOptions() override {
 	std::vector<dpp::command_option> temp;

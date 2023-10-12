@@ -1,42 +1,31 @@
-﻿# CMakeList.txt : CMake project for BUDe, include source and define
-# project specific logic here.
-#
-cmake_minimum_required (VERSION 3.15)
+﻿cmake_minimum_required (VERSION 3.20)
 
 project ("BUDe"	VERSION 0.5 DESCRIPTION "A friendly discord bot!")
 
-add_subdirectory(libs/DPP)
+file(GLOB bude_src CONFIGURE_DEPENDS "src/*.h" "src/*.cpp" "src/*/*.h" "src/*/*.cpp")
 
 # Add source to this project's executable.
-add_executable (${PROJECT_NAME} 
-		src/BUDe.cpp
-		src/BUDe.h
-		src/Commands/Core/Command.h
-		src/Commands/PingCommand.h
-		src/Commands/RPSCommand.h
-		src/Commands/AnnouncementCommand.h
-		src/Commands/CreditsCommand.h
-		src/Commands/AvatarCommand.h
-		src/Commands/AttachmentCommand.h
-		src/Commands/EmbedCommand.h
-		src/Listeners/rps_listener.h
-        src/Utils/ComponentBuilder.h
-		src/Utils/EmbedBuilder.h
-		src/Utils/ComponentData.h
-		src/Listeners/command_listener.cpp
-        src/Listeners/command_listener.h
-		src/Listeners/rps_listener.cpp
-		src/Commands/EchoCommand.cpp
-		src/Commands/EchoCommand.h
-		src/Commands/EmbedCommand.cpp
-		src/Commands/PMCommand.cpp
-		src/Commands/PMCommand.h
-        src/Commands/CreateThreadCommand.cpp
-        src/Commands/CreateThreadCommand.h
-		src/Commands/MessageThreadCommand.cpp
-		src/Commands/MessageThreadCommand.h
-        src/Commands/AvatarCommand.cpp
+add_executable(${PROJECT_NAME}
+		${bude_src} # Much love to GLOB <3
 )
+
+# ===============================================
+# Required stuff for coro:
+
+target_compile_definitions(${PROJECT_NAME} PUBLIC
+		DPP_CORO
+)
+
+target_compile_features(${PROJECT_NAME} PUBLIC
+		cxx_std_20
+)
+
+set(DPP_CORO on)
+
+# Coro stuff over.
+# ===============================================
+
+add_subdirectory(libs/DPP)
 
 target_link_libraries(${PROJECT_NAME}
 		dpp
@@ -47,7 +36,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
-		CMAKE_STANDARD 17
+		CMAKE_STANDARD 20
 		CMAKE_STANDARD_REQUIRED ON
 )
 

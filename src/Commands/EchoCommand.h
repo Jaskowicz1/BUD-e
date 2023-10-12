@@ -8,7 +8,7 @@ public:
 
     EchoCommand() : Command("echo", "Send a message in a different channel.", dpp::p_administrator) {};
 
-    void Execute(const dpp::slashcommand_t& event) override;
+    dpp::coroutine<void> Execute(dpp::slashcommand_t event) override;
 
     std::vector<dpp::command_option> CommandOptions() override {
         std::vector<dpp::command_option> temp;

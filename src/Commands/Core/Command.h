@@ -12,7 +12,7 @@ public:
 
     virtual ~Command() = default;
 
-    virtual void Execute(const dpp::slashcommand_t& event) = 0;
+    virtual dpp::coroutine<void> Execute(dpp::slashcommand_t event) = 0;
 
     virtual std::vector<dpp::command_option> CommandOptions() {
         // empty vector.

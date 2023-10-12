@@ -6,6 +6,6 @@ class command_listener {
 
 public:
 
-    static void on_slashcommand(const dpp::slashcommand_t& event);
+    static dpp::job on_slashcommand(dpp::slashcommand_t event);
 
 };

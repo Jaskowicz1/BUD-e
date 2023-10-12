@@ -10,8 +10,7 @@ public:
 
     RPSCommand() : Command("rps", "Play Rock, Paper, Scissors!") {};
 
-    void Execute(const dpp::slashcommand_t& event) override {
-
+    dpp::coroutine<void> Execute(dpp::slashcommand_t event) override {
         dpp::message msg(event.command.channel_id,
                          EmbedBuilder::BasicEmbed(dpp::colours::aqua,"Rock, Paper Scissors!",
                         "Let's play rock, paper, scissors! You pick and I'll pick!")
@@ -21,7 +20,7 @@ public:
                                                    ComponentData("Paper", "paper", dpp::unicode_emoji::newspaper),
                                                    ComponentData("Scissors", "scissors", dpp::unicode_emoji::scissors)});
 
-        event.reply(msg);
+        co_return event.reply(msg);
     }
 
     bool Enabled() override {

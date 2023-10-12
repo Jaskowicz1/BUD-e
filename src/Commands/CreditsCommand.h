@@ -9,7 +9,7 @@ public:
 
     CreditsCommand() : Command("credits", "Credits of BUD-e.") {};
 
-    void Execute(const dpp::slashcommand_t& event) override {
+    dpp::coroutine<void> Execute(dpp::slashcommand_t event) override {
         std::string str;
 
         str = std::string("Thank you for using BUD-e! I greatly appreciate it!\n") +
@@ -26,7 +26,7 @@ public:
               std::string("\n") +
               std::string("Again, Thank you for all the support and thank you for using BUD-e!");
 
-        event.reply(dpp::message(event.command.channel_id, EmbedBuilder::BasicEmbed(dpp::colours::aqua,
+	co_return event.reply(dpp::message(event.command.channel_id, EmbedBuilder::BasicEmbed(dpp::colours::aqua,
             "BUD-e - Credits.",
             str)).set_flags(dpp::m_ephemeral));
     };

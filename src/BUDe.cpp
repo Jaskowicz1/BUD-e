@@ -4,15 +4,10 @@
 #include "Commands/CreditsCommand.h"
 #include "Listeners/rps_listener.h"
 #include "Commands/AvatarCommand.h"
-#include "Commands/AttachmentCommand.h"
-#include "Commands/EmbedCommand.h"
 #include "Listeners/command_listener.h"
 #include "Utils/EmbedBuilder.h"
 #include "Commands/RPSCommand.h"
-#include "Commands/PMCommand.h"
 #include "Commands/EchoCommand.h"
-#include "Commands/CreateThreadCommand.h"
-#include "Commands/MessageThreadCommand.h"
 #include <random>
 #include <regex>
 
@@ -21,15 +16,14 @@ using json = nlohmann::json;
 int main(int argc, char *argv[])
 {
 	// "./BUDe" counts as an argument so 2 here means "./BUDe <token>"
-	if(argc != 2)
-	{
+	if(argc != 2) {
 		std::cout << "No bot token specified. Can't launch bot Aborting...";
 		return 0;
 	}
 
 	BUDe::token = argv[1];
 
-	dpp::cluster bot(BUDe::token, dpp::i_default_intents | dpp::i_message_content);
+	dpp::cluster bot{BUDe::token, dpp::i_default_intents | dpp::i_message_content};
 
 	BUDe::botRef = &bot;
 
@@ -40,16 +34,10 @@ int main(int argc, char *argv[])
 	BUDe::commands.emplace_back(std::make_unique<AnnouncementCommand>());
 	BUDe::commands.emplace_back(std::make_unique<CreditsCommand>());
 	BUDe::commands.emplace_back(std::make_unique<AvatarCommand>());
-	BUDe::commands.emplace_back(std::make_unique<AttachmentCommand>());
-	BUDe::commands.emplace_back(std::make_unique<EmbedCommand>());
-	//BUDe::commands.emplace_back(std::make_unique<PMCommand>());
 	BUDe::commands.emplace_back(std::make_unique<EchoCommand>());
-	//BUDe::commands.emplace_back(std::make_unique<CreateThreadCommand>());
-	BUDe::commands.emplace_back(std::make_unique<MessageThreadCommand>());
 
-	bot.on_slashcommand(&command_listener::on_slashcommand);
-	bot.on_button_click(&rps_listener::on_button_click);
-	//bot.on_user_context_menu(&HighFiveListener::OnUserContextMenu);
+	bot.on_slashcommand(command_listener::on_slashcommand);
+	bot.on_button_click(rps_listener::on_button_click);
 
 	/* Register slash command here in on_ready */
 	BUDe::botRef->on_ready([&](const dpp::ready_t& event) {
@@ -64,7 +52,7 @@ int main(int argc, char *argv[])
 
 			for(auto& cmd : BUDe::commands)
 			{
-				dpp::slashcommand tempCommand(cmd->commandName, cmd->commandDescription, BUDe::botRef->me.id);
+				dpp::slashcommand tempCommand{cmd->commandName, cmd->commandDescription, BUDe::botRef->me.id};
 
 				for(dpp::command_option& option : cmd->CommandOptions())
 				    	tempCommand.add_option(option);
@@ -125,10 +113,10 @@ void BUDe::callback_handler(int signum)
 void BUDe::DoStatusChange() {
 	// Generate a random value in the statuses array.
 	std::random_device rd;
-	std::mt19937 gen(rd());
+	std::mt19937 gen{rd()};
 	std::uniform_int_distribution<> distrib(0, statuses.size() - 1);
 
-	std::string newStatus (statuses[distrib(gen)]);
+	std::string newStatus{statuses[distrib(gen)]};
 
 	dpp::activity_type type = dpp::activity_type::at_game;
 
@@ -144,5 +132,5 @@ void BUDe::DoStatusChange() {
 	}
 
 	// Get a random status message and set the bot's presence to it.
-	BUDe::botRef->set_presence(dpp::presence(dpp::presence_status::ps_online, type, newStatus));
+	BUDe::botRef->set_presence(dpp::presence{dpp::presence_status::ps_online, type, newStatus});
 }
