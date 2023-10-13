@@ -9,8 +9,8 @@ dpp::coroutine<void> AvatarCommand::Execute(dpp::slashcommand_t event) {
     dpp::user* user = dpp::find_user(user_id);
 
     if(!user) {
-	event.reply("I failed to find that user. Please try again later. If the issue persists, please get in contact!");
-	co_return;
+        event.reply("I failed to find that user. Please try again later. If the issue persists, please get in contact!");
+        co_return;
     }
 
     dpp::embed embed = EmbedBuilder::BasicEmbed(dpp::colours::aqua,user->username + "'s Avatar!",
