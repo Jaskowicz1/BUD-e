@@ -9,6 +9,8 @@
 #include "Commands/RPSCommand.h"
 #include "Commands/EchoCommand.h"
 #include "Commands/MicrowaveCommand.h"
+#include "Commands/BallsTugCommand.h"
+#include "Commands/MemeCommand.h"
 #include <random>
 #include <regex>
 
@@ -37,6 +39,8 @@ int main(int argc, char *argv[])
 	BUDe::commands.emplace_back(std::make_unique<AvatarCommand>());
 	BUDe::commands.emplace_back(std::make_unique<EchoCommand>());
 	BUDe::commands.emplace_back(std::make_unique<MicrowaveCommand>());
+	BUDe::commands.emplace_back(std::make_unique<BallsTugCommand>());
+	BUDe::commands.emplace_back(std::make_unique<MemeCommand>());
 
 	bot.on_slashcommand(command_listener::on_slashcommand);
 	bot.on_button_click(rps_listener::on_button_click);

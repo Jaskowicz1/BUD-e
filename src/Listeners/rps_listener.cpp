@@ -14,10 +14,11 @@ void rps_listener::on_button_click(const dpp::button_click_t& event) {
 
         // this is now nice :)
 
-        ComponentBuilder::AddButtonsToMessage(msg, {ComponentData("Rock", "rock", dpp::unicode_emoji::rock),
-                                                    ComponentData("Paper", "paper", dpp::unicode_emoji::newspaper),
-                                                    ComponentData("Scissors", "scissors", dpp::unicode_emoji::scissors)}
-        );
+        ComponentBuilder::AddButtonsToMessage(msg, {
+		ComponentData{"Rock", "rock", dpp::unicode_emoji::rock},
+		ComponentData{"Paper", "paper", dpp::unicode_emoji::newspaper},
+		ComponentData{"Scissors", "scissors", dpp::unicode_emoji::scissors}
+	});
 
         event.reply(dpp::ir_update_message, msg);
 
@@ -98,7 +99,7 @@ void rps_listener::on_button_click(const dpp::button_click_t& event) {
                                               "I picked " + aiChoiceEmoji + " and you picked " + playerChoiceEmoji + "! Press the button below to play again!")
     );
 
-    ComponentBuilder::AddButtonToMessage(msg, ComponentData("Play Again", "playagain", dpp::unicode_emoji::video_game));
+    ComponentBuilder::AddButtonToMessage(msg, ComponentData{"Play Again", "playagain", dpp::unicode_emoji::video_game});
 
     // Reply but edit previous message (need to reply or discord shows "interaction failed")
     event.reply(dpp::ir_update_message, msg);

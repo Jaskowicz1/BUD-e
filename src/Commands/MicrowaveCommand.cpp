@@ -6,6 +6,7 @@ dpp::coroutine<void> MicrowaveCommand::Execute(dpp::slashcommand_t event) {
 	std::string item = event.get_parameter("item").index() == 0 ? "food" : std::get<std::string>(event.get_parameter("item"));
 
 	if(item == BUDe::botRef->me.get_mention()) {
+		// Maybe a little rude but it's funny.
 		co_return event.reply(dpp::message("Beep Boop what are you doing step-cyborg?").set_flags(dpp::m_ephemeral));
 	}
 
@@ -28,11 +29,9 @@ dpp::coroutine<void> MicrowaveCommand::Execute(dpp::slashcommand_t event) {
 
 	std::string message = "Ding! Your " + item + " is ready!";
 
-	std::cout << message << "\n";
-
 	if(item_lower == "iphone" || item_lower == "samsung" || item_lower == "phone") {
 		message = "Di- Oh. It appears the phone may have blown up.";
 	}
 
-	event.edit_response(message);
+	co_return event.edit_response(message);
 }

@@ -22,7 +22,7 @@ public:
               std::string("APIs used:\n") +
               std::string("- D++\n") +
               std::string("\n") +
-              std::string("Extra thanks to the people over at the D++ discord for helping me get everything working!") +
+              std::string("Extra thanks to the people over at the D++ discord for the help!") +
               std::string("\n") +
               std::string("Again, Thank you for all the support and thank you for using BUD-e!");
 
