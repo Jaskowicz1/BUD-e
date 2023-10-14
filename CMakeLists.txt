@@ -10,6 +10,18 @@ add_executable(${PROJECT_NAME}
 )
 
 # ===============================================
+# Stuff for registering commands via Jenkins
+
+set(REGISTER_COMMANDS, on)
+
+if (REGISTER_COMMANDS)
+	target_compile_definitions(${PROJECT_NAME} REGISTER_COMMANDS)
+endif ()
+
+# Registering commands stuff over.
+# ===============================================
+
+# ===============================================
 # Required stuff for coro:
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC
