@@ -19,9 +19,14 @@ using json = nlohmann::json;
 int main(int argc, char *argv[])
 {
 	// "./BUDe" counts as an argument so 2 here means "./BUDe <token>"
-	if(argc != 2) {
-		std::cout << "No bot token specified. Can't launch bot Aborting...";
+	if(argc < 2) {
+		std::cout << "No bot token specified, Aborting...";
 		return 0;
+	} else if(argc > 3) {
+		std::cout << "Too many arguments specified, Aborting...";
+		return 0;
+	} else if(argc == 3 && argv[2] == "REGISTER") {
+		BUDe::register_commands = true;
 	}
 
 	BUDe::token = argv[1];
@@ -46,18 +51,17 @@ int main(int argc, char *argv[])
 	bot.on_button_click(rps_listener::on_button_click);
 
 	/* Register slash command here in on_ready */
-	BUDe::botRef->on_ready([&](const dpp::ready_t& event) {
+	BUDe::botRef->on_ready([&bot](const dpp::ready_t& event) {
 
 		/* Wrap command registration in run_once to make sure it doesn't run on every full reconnection */
-		if (dpp::run_once<struct register_bot_commands>()) {
+		if (BUDe::register_commands && dpp::run_once<struct register_bot_commands>()) {
 
 			BUDe::botRef->log(dpp::ll_info, "Bot is registering commands.");
 
 			std::vector<dpp::slashcommand> tempCommands;
 			std::vector<dpp::slashcommand> tempCommandsPrivate;
 
-			for(auto& cmd : BUDe::commands)
-			{
+			for(auto& cmd : BUDe::commands) {
 				dpp::slashcommand tempCommand{cmd->commandName, cmd->commandDescription, BUDe::botRef->me.id};
 
 				for(dpp::command_option& option : cmd->CommandOptions())
@@ -77,10 +81,6 @@ int main(int argc, char *argv[])
 			BUDe::botRef->guild_bulk_command_create(tempCommandsPrivate, 667401873233543173);
 
 			BUDe::botRef->log(dpp::ll_info, "Bot has completed registering commands.");
-
-			bot.start_timer([](const dpp::timer& timer) {
-			    	BUDe::DoStatusChange();
-			}, 120);
 		}
 
 		BUDe::botRef->message_create(dpp::message(667405048267014164,
@@ -92,6 +92,11 @@ int main(int argc, char *argv[])
 
 		// Call status change now.
 		BUDe::DoStatusChange();
+
+		/* Now, start a timer to do a status change every x seconds */
+		bot.start_timer([](const dpp::timer& timer) {
+			BUDe::DoStatusChange();
+		}, 120);
 	});
 
 	signal(SIGINT, BUDe::callback_handler);
@@ -105,7 +110,7 @@ int main(int argc, char *argv[])
 
 void BUDe::callback_handler(int signum)
 {
-	BUDe::botRef->message_create(dpp::message(667405048267014164,EmbedBuilder::BasicEmbedWithTimestamp(
+	BUDe::botRef->message_create(dpp::message(667405048267014164, EmbedBuilder::BasicEmbedWithTimestamp(
 		dpp::colours::red,
 		"Shutting systems off, Captain!",
 		"I have received a signal to shut down. "))

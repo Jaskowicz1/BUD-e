@@ -6,30 +6,18 @@ file(GLOB bude_src CONFIGURE_DEPENDS "src/*.h" "src/*.cpp" "src/*/*.h" "src/*/*.
 
 # Add source to this project's executable.
 add_executable(${PROJECT_NAME}
-		${bude_src} # Much love to GLOB <3
+	${bude_src} # Much love to GLOB <3
 )
-
-# ===============================================
-# Stuff for registering commands via Jenkins
-
-set(REGISTER_COMMANDS, on)
-
-if (REGISTER_COMMANDS)
-	target_compile_definitions(${PROJECT_NAME} REGISTER_COMMANDS)
-endif ()
-
-# Registering commands stuff over.
-# ===============================================
 
 # ===============================================
 # Required stuff for coro:
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC
-		DPP_CORO
+	DPP_CORO
 )
 
 target_compile_features(${PROJECT_NAME} PUBLIC
-		cxx_std_20
+	cxx_std_20
 )
 
 set(DPP_CORO on)
@@ -40,16 +28,14 @@ set(DPP_CORO on)
 add_subdirectory(libs/DPP)
 
 target_link_libraries(${PROJECT_NAME}
-		dpp
+	dpp
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
-		libs/DPP/include
+	libs/DPP/include
 )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
-		CMAKE_STANDARD 20
-		CMAKE_STANDARD_REQUIRED ON
+	CMAKE_STANDARD 20
+	CMAKE_STANDARD_REQUIRED ON
 )
-
-# TODO: Add tests and install targets if needed.
