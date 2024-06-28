@@ -44,3 +44,6 @@ CMakeSettings.json
 *.exe
 *.out
 *.app
+
+# Config file
+config.json

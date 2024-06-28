@@ -13,4 +13,6 @@ Experimental also serves as a testing ground for D++ contributions.
 
 ## Libraries
 
-- D++ (Follow [Installation Guide](https://dpp.dev/9.0.2/buildcmake.html) to install. Put the "libs" folder with every other folder).
+- D++ (Create a `libs` folder, do `cd libs`, then clone `git clone https://github.com/brainboxdotcc/DPP.git`)
+- `libmysqlclient-dev` (If on Debian 9+, it's `default-libmysqlclient-dev`).
+- `libfmt-dev`
