@@ -430,7 +430,7 @@ resultset query(const std::string &format, const paramlist &parameters) {
 				bindings[i].buffer_type = MYSQL_TYPE_VAR_STRING;
 				bindings[i].buffer = string_buffers[i];
 				bindings[i].buffer_length = fields[i].length;
-				bindings[i].is_null = &is_null[i];
+				bindings[i].is_null = nullptr;
 				bindings[i].length = &lengths[i];
 			}
 
