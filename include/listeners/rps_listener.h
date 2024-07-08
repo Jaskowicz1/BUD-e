@@ -6,5 +6,5 @@ class rps_listener {
 
 public:
 
-	static void on_button_click(const dpp::button_click_t& event);
+	static dpp::task<void> on_button_click(dpp::button_click_t event);
 };

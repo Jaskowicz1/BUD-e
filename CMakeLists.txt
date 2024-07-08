@@ -9,7 +9,8 @@ file(GLOB bude_src CONFIGURE_DEPENDS "src/*.h" "src/*.cpp" "src/*/*.h" "src/*/*.
 
 # Add source to this project's executable.
 add_executable(${PROJECT_NAME}
-	${bude_src} # Much love to GLOB <3
+	${bude_src}
+		src/commands/info_command.cpp # Much love to GLOB <3
 )
 
 if(EXISTS "/usr/include/fmt/format.h")

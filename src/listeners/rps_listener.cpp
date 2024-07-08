@@ -4,7 +4,7 @@
 #include "utils/embed_builder.h"
 #include "utils/component_builder.h"
 
-void rps_listener::on_button_click(const dpp::button_click_t& event) {
+dpp::task<void> rps_listener::on_button_click(dpp::button_click_t event) {
 
     // Handle playing again.
     if(event.custom_id == "playagain") {
@@ -23,13 +23,13 @@ void rps_listener::on_button_click(const dpp::button_click_t& event) {
 
         event.reply(dpp::ir_update_message, msg);
 
-        return;
+        co_return;
     }
 
     // If the event wasn't rock, nor paper, nor scissors, then just return.
     // This handler is not made for anything else, and we've already handled playing again (if that was the case).
     if(event.custom_id != "rock" && event.custom_id != "paper" && event.custom_id != "scissors")
-        return;
+        co_return;
 
     std::random_device rd;
     std::mt19937 gen(rd());

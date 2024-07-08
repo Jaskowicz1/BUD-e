@@ -20,7 +20,6 @@
 using json = nlohmann::json;
 
 int main(int argc, char *argv[]) {
-	// "./BUDe" counts as an argument so 2 here means "./BUDe <token>"
 	if (argc == 2 && strcmp(argv[1], "REGISTER") == 0) {
 		BUDe::register_commands = true;
 	}
