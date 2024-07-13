@@ -16,11 +16,13 @@
 #include "commands/automod_command.h"
 #include <random>
 #include <regex>
+#include <commands/info_command.h>
 
 using json = nlohmann::json;
 
 int main(int argc, char *argv[]) {
 	if (argc == 2 && strcmp(argv[1], "REGISTER") == 0) {
+		std::cout << "Registering commands..." << "\n";
 		BUDe::register_commands = true;
 	}
 
@@ -48,6 +50,7 @@ int main(int argc, char *argv[]) {
 	BUDe::commands.emplace_back(std::make_unique<ballstug_command>());
 	BUDe::commands.emplace_back(std::make_unique<meme_command>());
 	BUDe::commands.emplace_back(std::make_unique<automod_command>(bot));
+	BUDe::commands.emplace_back(std::make_unique<info_command>());
 
 	bot.on_slashcommand(command_listener::on_slashcommand);
 	bot.on_button_click(rps_listener::on_button_click);

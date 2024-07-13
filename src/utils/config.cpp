@@ -3,7 +3,6 @@
 #include <dpp/json.h>
 #include <fstream>
 
-
 namespace config {
 
 static nlohmann::json configdocument;
