@@ -11,9 +11,6 @@ dpp::coroutine<void> meme_command::execute(dpp::slashcommand_t event) {
 	auto bottom_text = std::get<std::string>(event.get_parameter("bottomtext"));
 	auto image_url = std::get<std::string>(event.get_parameter("imageurl"));
 
-	std::replace(top_text.begin(), top_text.end(), ' ', '_');
-	std::replace(bottom_text.begin(), bottom_text.end(), ' ', '_');
-
 	std::string url = "https://api.memegen.link/images/custom/" + top_text + "/" + bottom_text + ".jpg?alt=" + image_url;
 
 	dpp::http_request_completion_t request = co_await BUDe::botRef->co_request(url, dpp::m_get);
