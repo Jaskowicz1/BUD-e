@@ -38,11 +38,11 @@ dpp::task<void> rps_listener::on_button_click(dpp::button_click_t event) {
 
     int aiChoiceNUM = distrib(gen);
 
-    std::string aiChoice;
-    std::string aiChoiceEmoji;
-    std::string playerChoiceEmoji;
-    std::string result;
-    uint32_t resultColour;
+    std::string aiChoice{};
+    std::string aiChoiceEmoji{};
+    std::string playerChoiceEmoji{};
+    std::string result {"Draw!"};
+    uint32_t resultColour {dpp::colours::yellow};
 
     // this switch and the next two if statements really do not feel like a good solution.
     // but it works so let's just leave it.
@@ -94,10 +94,9 @@ dpp::task<void> rps_listener::on_button_click(dpp::button_click_t event) {
             result = "I won!";
             resultColour = dpp::colours::red;
         }
-    } else { // Assume that player picked the same as BUD-e.
-        result = "Draw!";
-        resultColour = dpp::colours::yellow;
     }
+
+    // Draw is default.
 
     dpp::message msg(event.command.channel_id,
         embed_builder::basic_embed(
