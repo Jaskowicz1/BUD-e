@@ -1,3 +1,5 @@
+## This repo has been moved to https://codeberg.org/Jaskowicz/BUD-e.
+
 # BUD-e
 The BUD-e Discord Bot, rewrote in C++!
 Updates will be made frequently.
